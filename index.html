@@ -173,7 +173,6 @@ nav.hide {
   height: 2px;
   bottom: 0;
   left: 0;
-  background-color: var(--gold);
   transition: width 0.2s var(--ease);
 }
 
@@ -244,7 +243,8 @@ nav.hide {
 }
 
 /* ---------- Buttons ---------- */
-.btn {
+.btn,
+a.btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -261,9 +261,12 @@ nav.hide {
   overflow: hidden;
   font-size: 0.95rem;
   box-shadow: var(--shadow-sm);
+  text-decoration: none; /* Elimina subrayado en enlaces */
+  color: inherit; /* Respeta el color definido en las variantes */
 }
 
-.btn::before {
+.btn::before,
+a.btn::before {
   content: '';
   position: absolute;
   inset: 0;
@@ -271,53 +274,64 @@ nav.hide {
   transition: opacity 0.3s var(--ease);
 }
 
-.btn:hover::before {
+.btn:hover::before,
+a.btn:hover::before {
   opacity: 0.1;
 }
 
-.btn:active {
+.btn:active,
+a.btn:active {
   transform: translateY(1px);
 }
 
-.btn-primary {
+/* Variantes */
+.btn-primary,
+a.btn-primary {
   background: var(--dark-blue);
   color: var(--white);
 }
 
-.btn-primary:hover {
+.btn-primary:hover,
+a.btn-primary:hover {
   background: var(--dark-blue-lighter);
   transform: translateY(-2px);
   box-shadow: var(--shadow);
 }
 
-.btn-primary::before {
+.btn-primary::before,
+a.btn-primary::before {
   background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
 }
 
-.btn-ghost {
+.btn-ghost,
+a.btn-ghost {
   background: transparent;
   border: 2px solid var(--dark-blue);
   color: var(--dark-blue);
 }
 
-.btn-ghost:hover {
+.btn-ghost:hover,
+a.btn-ghost:hover {
   background: rgba(10, 25, 47, 0.04);
   transform: translateY(-2px);
   box-shadow: var(--shadow-sm);
 }
 
-.btn-gold {
+.btn-gold,
+a.btn-gold {
   background: var(--gold);
   color: var(--dark-blue);
 }
 
-.btn-gold:hover {
+.btn-gold:hover,
+a.btn-gold:hover {
   background: var(--gold-light);
   transform: translateY(-2px);
   box-shadow: var(--shadow);
 }
 
-.btn-gold::before {
+.btn-gold::before,
+a.btn-gold::before {
   background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
 }
 
@@ -1279,16 +1293,17 @@ footer {
           <i class="fas fa-chevron-down dropdown-icon"></i>
         </button>
         <ul class="dropdown-menu">
-          <li><a href="/Assets/pages/page_0767785_diseño.html">Diseño</a></li>
-          <li><a href="/Assets/pages/page_0767785_marketing.html">Marketing</a></li>
-          <li><a href="/Assets/pages/page_0767785_desarrollo_web.html">Desarrollo Web</a></li>
-          <li><a href="/Assets/pages/page_0767785_ciberseguridad.html">Ciberseguridad</a></li>
-          <li><a href="/Assets/pages/page_0767785_optimización_organizacional.html">Optimización Organizacional</a></li>
+          <li><a href="/pages/page_0767785_diseño.html">Diseño</a></li>
+          <li><a href="/pages/page_0767785_marketing.html">Marketing</a></li>
+          <li><a href="/pages/page_0767785_desarrollo_web.html">Desarrollo Web</a></li>
+          <li><a href="/pages/page_0767785_ciberseguridad.html">Ciberseguridad</a></li>
+          <li><a href="/pages/page_0767785_optimización_organizacional.html">Optimización Organizacional</a></li>
         </ul>
       </div>
-      <a href="/Assets/word.ing/papersing-869836-portfolio.html">Portafolio</a>
-      <a href="/Assets/word.ing/papersing-869836-why-us.html">Por qué nosotros</a>
-      <a href="/Assets/word.ing/papersing-869836-contact.html">Contacto</a>
+      <a href="/word.ing/papersing-869836-portfolio.html">Portafolio</a>
+      <a href="/word.ing/papersing-869836-why-us.html">Por qué nosotros</a>
+      <a href="/word.ing/papersing-869836-contact.html">Contacto</a>
+      <a href="/word.ing/blog/blog-Center.html">blog</a>
     </div>
   </div>
 </nav>
@@ -1303,8 +1318,8 @@ footer {
       Estrategia, diseño, ingeniería y gobernanza convergen en soluciones que aceleran el crecimiento sostenible y protegen el valor empresarial.
     </p>
     <div class="hero-actions reveal delay-200">
-      <a href="/Assets/word.ing/papersing-869836-portfolio.html" class="btn btn-gold">Explorar soluciones</a>
-      <a href="/Assets/word.ing/papersing-869836-contact.html" class="btn btn-ghost" style="border-color: rgba(255,255,255,0.3); color: white;">Agendar reunión</a>
+      <a href="/word.ing/papersing-869836-portfolio.html" class="btn btn-gold">Explorar soluciones</a>
+      <a href="/word.ing/papersing-869836-contact.html" class="btn btn-ghost" style="border-color: rgba(255,255,255,0.3); color: white;">Agendar reunión</a>
     </div>
   </div>
 </header>
@@ -1354,7 +1369,6 @@ footer {
           Creamos identidades visuales con propósito: desde logotipos hasta sistemas de marca digital.
           Cada elemento responde a una estrategia clara, estética rigurosa y experiencia de usuario intencionada.
         </p>
-        <a href="/Assets/pages/page_0767785_diseño.html" class="btn btn-ghost">Ver proyectos</a>
       </div>
       <!-- Service 2: Marketing -->
       <div class="service feature-card reveal delay-100 gradient-border">
@@ -1366,7 +1380,6 @@ footer {
           Desarrollamos estrategias 360° basadas en audiencias, datos y narrativas de valor.
           Desde campañas de performance hasta posicionamiento orgánico, movemos marcas donde importa.
         </p>
-        <a href="#portfolio" class="btn btn-ghost">Ver proyectos</a>
       </div>
       <!-- Service 3: Desarrollo Web -->
       <div class="service feature-card reveal delay-200 gradient-border">
@@ -1378,7 +1391,6 @@ footer {
           Construimos plataformas digitales escalables, seguras y centradas en el usuario.
           Tecnología limpia, arquitectura modular y rendimiento optimizado para crecer sin fricción.
         </p>
-        <a href="#portfolio" class="btn btn-ghost">Ver proyectos</a>
       </div>
       <!-- Service 4: Ciberseguridad -->
       <div class="service feature-card reveal delay-300 gradient-border">
@@ -1390,7 +1402,6 @@ footer {
           Protegemos activos digitales mediante auditorías proactivas, protocolos de respuesta y arquitecturas defensivas.
           La seguridad no es un costo: es la base de la confianza empresarial.
         </p>
-        <a href="#portfolio" class="btn btn-ghost">Ver proyectos</a>
       </div>
       <!-- Service 5: Optimización Organizacional -->
       <div class="service feature-card reveal delay-400 gradient-border">
@@ -1402,7 +1413,17 @@ footer {
           Estructuramos procesos, equipos y flujos para maximizar eficiencia, claridad y capacidad de ejecución.
           Transformamos la complejidad operativa en ventaja estratégica sostenible.
         </p>
-        <a href="#portfolio" class="btn btn-ghost">Ver proyectos</a>
+      </div>
+            <!-- Service 4: Ciberseguridad -->
+      <div class="service feature-card reveal delay-300 gradient-border">
+        <div class="service-icon">
+          <i class="fas fa-shield-alt"></i>
+        </div>
+        <h3>Ciberseguridad</h3>
+        <p>
+          Protegemos activos digitales mediante auditorías proactivas, protocolos de respuesta y arquitecturas defensivas.
+          La seguridad no es un costo: es la base de la confianza empresarial.
+        </p>
       </div>
     </div>
   </div>
@@ -1421,8 +1442,7 @@ footer {
           Cada solución responde a un marco riguroso: desde la definición de propósito hasta la protección de activos y la escalabilidad técnica. No entregamos proyectos; entregamos infraestructuras de crecimiento.
         </p>
         <div class="reveal delay-300">
-          <a href="#portfolio" class="btn btn-primary">Ver nuestro trabajo</a>
-          <a href="#contact" class="btn btn-ghost" style="margin-left: 12px">Conectar con nosotros</a>
+          <a href="/word.ing/papersing-center.back-portfolio/69869868965.html" class="btn btn-primary">Ver nuestro trabajo</a>
         </div>
       </div>
       <div class="why-visual">
@@ -1438,7 +1458,7 @@ footer {
 <section id="blog" class="section blog">
   <div class="container">
     <div class="section-title fade-in">
-      <h2>Últimos del Blog</h2>
+      <h2>Blog Center</h2>
       <p>Insights, tendencias y estrategias para el crecimiento de tu negocio</p>
     </div>
     <div class="blog-grid">
@@ -1451,7 +1471,7 @@ footer {
           </div>
           <h3>Estrategias Digitales para PYMES en 2026</h3>
           <p>Descubre las tendencias más impactantes que definirán el éxito digital de las pequeñas y medianas empresas este año.</p>
-          <a href="#" class="blog-read-more">Leer más <i class="fas fa-arrow-right"></i></a>
+          <a href="/word.ing/blog/234698609126012093.html" class="blog-read-more">Leer más <i class="fas fa-arrow-right"></i></a>
         </div>
       </div>
       <div class="blog-card fade-in">
@@ -1463,7 +1483,7 @@ footer {
           </div>
           <h3>Guía Definitiva de Ciberseguridad para Empresas</h3>
           <p>Aprende a proteger tus activos digitales con las mejores prácticas y herramientas del mercado actual.</p>
-          <a href="#" class="blog-read-more">Leer más <i class="fas fa-arrow-right"></i></a>
+          <a href="/word.ing/blog/93274823745273480.html" class="blog-read-more">Leer más <i class="fas fa-arrow-right"></i></a>
         </div>
       </div>
       <div class="blog-card fade-in">
@@ -1475,7 +1495,43 @@ footer {
           </div>
           <h3>El Poder del Marketing Híbrido</h3>
           <p>Cómo combinar estrategias digitales y tradicionales para crear campañas que realmente conectan con tu audiencia.</p>
-          <a href="#" class="blog-read-more">Leer más <i class="fas fa-arrow-right"></i></a>
+          <a href="/word.ing/blog/02956096016123093.html" class="blog-read-more">Leer más <i class="fas fa-arrow-right"></i></a>
+        </div>
+      </div>
+            <div class="blog-card fade-in">
+        <img src="https://placehold.co/600x400/0d2139/febd01?text=Estrategias+Digitales" alt="Estrategias Digitales" class="blog-img">
+        <div class="blog-content">
+          <div class="blog-meta">
+            <span><i class="far fa-calendar"></i> 15 Ene 2026</span>
+            <span><i class="far fa-clock"></i> 5 min lectura</span>
+          </div>
+          <h3>Estrategias Digitales para PYMES en 2026</h3>
+          <p>Descubre las tendencias más impactantes que definirán el éxito digital de las pequeñas y medianas empresas este año.</p>
+          <a href="/word.ing/blog/5586923782348770129090.html" class="blog-read-more">Leer más <i class="fas fa-arrow-right"></i></a>
+        </div>
+      </div>
+      <div class="blog-card fade-in">
+        <img src="https://placehold.co/600x400/0d2139/febd01?text=Ciberseguridad" alt="Ciberseguridad" class="blog-img">
+        <div class="blog-content">
+          <div class="blog-meta">
+            <span><i class="far fa-calendar"></i> 12 Ene 2026</span>
+            <span><i class="far fa-clock"></i> 7 min lectura</span>
+          </div>
+          <h3>Guía Definitiva de Ciberseguridad para Empresas</h3>
+          <p>Aprende a proteger tus activos digitales con las mejores prácticas y herramientas del mercado actual.</p>
+          <a href="/word.ing/blog/1265387237132767821.html" class="blog-read-more">Leer más <i class="fas fa-arrow-right"></i></a>
+        </div>
+      </div>
+      <div class="blog-card fade-in">
+        <img src="https://placehold.co/600x400/0d2139/febd01?text=Marketing+Híbrido" alt="Marketing Híbrido" class="blog-img">
+        <div class="blog-content">
+          <div class="blog-meta">
+            <span><i class="far fa-calendar"></i> 10 Ene 2026</span>
+            <span><i class="far fa-clock"></i> 6 min lectura</span>
+          </div>
+          <h3>El Poder del Marketing Híbrido</h3>
+          <p>Cómo combinar estrategias digitales y tradicionales para crear campañas que realmente conectan con tu audiencia.</p>
+          <a href="/word.ing/blog/1233247721378871236.html" class="blog-read-more">Leer más <i class="fas fa-arrow-right"></i></a>
         </div>
       </div>
     </div>
@@ -1493,30 +1549,32 @@ footer {
           Convertimos ideas en soluciones digitales que generan valor real.
         </p>
         <div class="social-links">
-          <a href="#" target="_blank" rel="noopener" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
-          <a href="#" target="_blank" rel="noopener" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+          <a href="https://www.facebook.com/profile.php?id=61571622719609" target="_blank" rel="noopener" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+          <a href="https://www.instagram.com/clyvernaut_corporation/" target="_blank" rel="noopener" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
           <a href="https://www.linkedin.com/in/clyvernautcc/" target="_blank" rel="noopener" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
-          <a href="#" target="_blank" rel="noopener" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
+          <a href="https://www.tiktok.com/@clyvernaut_corporation" target="_blank" rel="noopener" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
+          <a href="https://www.youtube.com/@ClyvernautCorporation" target="_blank" rel="noopener" aria-label="Youtube"><i class="fab fa-youtube"></i></a>
+          <a href="https://www.pinterest.com/ClyvernautCorporation/" target="_blank" rel="noopener" aria-label="Ponterest"><i class="fab fa-pinterest"></i></a>
         </div>
       </div>
       <div class="footer-col">
         <h4>Servicios</h4>
         <div class="footer-links">
-          <a href="#services">Diseño</a>
-          <a href="#services">Marketing</a>
-          <a href="#services">Desarrollo Web</a>
-          <a href="#services">Ciberseguridad</a>
-          <a href="#services">Optimización Organizacional</a>
+          <a href="/word.ing/pages/page_0767785_diseño.html">Diseño</a>
+          <a href="/word.ing/pages/page_0767785_marketing.html">Marketing</a>
+          <a href="/word.ing/pages/page_0767785_desarrollo_web.html">Desarrollo Web</a>
+          <a href="/word.ing/pages/page_0767785_ciberseguridad.html">Ciberseguridad</a>
+          <a href="/word.ing/pages/page_0767785_optimizacion_organizacional.html">Optimización Organizacional</a>
         </div>
       </div>
       <div class="footer-col">
         <h4>Empresa</h4>
         <div class="footer-links">
-          <a href="#why">Sobre Nosotros</a>
-          <a href="#portfolio">Portafolio</a>
-          <a href="#">Resultados</a>
-          <a href="#">Trabaja con Nosotros</a>
-          <a href="#blog">Blog</a>
+          <a href="/word.ing/papersing-869836-why-us.html">Sobre Nosotros</a>
+          <a href="/word.ing/papersing-869836-portfolio.html">Portafolio</a>
+          <a href="/word.ing/papersing-869836-results.html">Resultados</a>
+          <a href="/word.ing/papersing-869836-work-with-us.html">Trabaja con Nosotros</a>
+          <a href="/word.ing/blog/blog-Center.html">Blog</a>
         </div>
       </div>
       <div class="footer-col">
@@ -1524,13 +1582,13 @@ footer {
         <p style="margin-bottom: 15px; opacity: 0.7;">
           samuelaga20032024@gmail.com<br>
           +51 998 235 688<br>
-          Lima, Perú
+          Barranca - Lima, Perú
         </p>
-        <a href="#contact" class="btn btn-gold">Habla con un experto</a>
+        <a href="/word.ing/papersing-869836-contact.html" class="btn btn-gold">Habla con un experto</a>
       </div>
     </div>
     <div class="footer-bottom">
-      <p>&copy; <span id="current-year">2026</span> Clyvernaut Corporation. Todos los derechos reservados.</p>
+    <p>&copy; <span id="current-year">2026</span> Clyvernaut Corporation. Todos los derechos reservados. Diseñado para impulsar el crecimiento sostenible con excelencia estratégica y tecnológica.</p>
     </div>
   </div>
 </footer>
@@ -1661,4 +1719,3 @@ serviceCards.forEach(card => {
 
 </body>
 </html>
-
