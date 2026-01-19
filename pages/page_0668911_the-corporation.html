@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>La Corporación | Clyvernaut Corporation</title>
+    <meta name="description" content="Conoce la historia, filosofía y equipo estratégico de Clyvernaut Corporation. Gobernanza, innovación y transformación estratégica." />
+    <meta name="author" content="Clyvernaut Corporation" />
+    <meta name="robots" content="index, follow" />
+    <link rel="icon" href="/assets/32x32.png" type="image/x-icon" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;600;800;900&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio"></script>
+
+
+
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        primary: "#febd01",
+                        "primary-dark": "#e5aa00",
+                        "corporate-blue": "#0d2139",
+                        "corporate-dark": "#061221",
+                        "neutral-gray": "#f8fafc",
+                    },
+                    animation: {
+                        'spin-slow': 'spin 20s linear infinite',
+                        'float': 'float 6s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-20px)' },
+                        }
+                    }
+                },
+            },
+        }
+    </script>
+
+    <style>
+        nav {
+            transition: transform 0.35s ease, opacity 0.25s ease;
+        }
+
+        .nav-hidden {
+            transform: translateY(-100%);
+            opacity: 0;
+        }
+
+        body {
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .glass-nav {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+
+        .text-gradient {
+            background: linear-gradient(to right, #0d2139, #febd01);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* ---------Menú móvil---------- */
+        .mobile-menu {
+            transform: translateX(100%);
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+        .mobile-menu.open {
+            transform: translateX(0);
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .overlay {
+            background: rgba(0, 0, 0, 0.4);
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease;
+        }
+        .overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        @media (max-width: 1023px) {
+            .no-scrollbar::-webkit-scrollbar {
+                display: none;
+            }
+            .no-scrollbar {
+                -ms-overflow-style: none;
+                scrollbar-width: none;
+            }
+        }
+
+        .timeline-line {
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(to bottom, #febd01, #0d2139);
+        }
+
+        .team-card {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .team-card:hover {
+            transform: translateY(-8px);
+        }
+    </style>
+</head>
+<body class="bg-neutral-gray overflow-x-hidden">
+
+    <div id="overlay" class="overlay fixed inset-0 z-40 lg:hidden"></div>
+
+    <nav class="fixed top-0 left-0 w-full h-0 overflow-hidden opacity-0 pointer-events-none z-50">
+      <div class="max-w-[1440px] mx-auto px-6 lg:px-12 h-20 lg:h-24 flex items-center justify-between">
+          <div class="flex items-center cursor-pointer">
+              <a href="/index.html">
+                  <img 
+                      src="/image/Logo_Spyther.png"
+                      alt="Clyvernaut Corporation Logo"
+                      class="h-10 lg:h-12 w-auto object-contain transition-transform duration-300 hover:scale-105"
+                  />
+              </a>
+          </div>
+
+            <div class="hidden lg:flex items-center gap-12">
+                <a class="text-[11px] font-bold uppercase tracking-[0.15em] hover:text-primary transition-colors relative after:content-[''] after:absolute after:-bottom-2 after:left-0 after:w-0 after:h-[2px] after:bg-primary after:transition-all hover:after:w-full" href="/word.ing/papersing-869836-why-us.html">La Corporación</a>
+
+                <div class="relative group">
+                    <button class="text-[11px] font-bold uppercase tracking-[0.15em] hover:text-primary transition-colors flex items-center gap-1 py-6">
+                        Servicios
+                        <span class="material-symbols-outlined text-sm group-hover:rotate-180 transition-transform duration-300">expand_more</span>
+                    </button>
+                    <div class="absolute top-full -left-10 w-[380px] bg-white border border-gray-100 shadow-[0_30px_60px_-15px_rgba(0,0,0,0.1)] opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform translate-y-4 group-hover:translate-y-0 p-2">
+                        <div class="grid gap-1">
+                            <a class="flex items-start gap-4 p-4 hover:bg-neutral-gray transition-colors" href="/pages/page_0767785_diseño.html">
+                                <span class="material-symbols-outlined text-gray-400 mt-1">brush</span>
+                                <div>
+                                    <p class="text-xs font-bold uppercase tracking-wide text-corporate-blue">Diseño & Identidad</p>
+                                    <p class="text-[10px] text-gray-400 mt-1 leading-relaxed">Identidad visual y narrativa de marca.</p>
+                                </div>
+                            </a>
+                            <a class="flex items-start gap-4 p-4 hover:bg-neutral-gray transition-colors" href="/pages/page_0767786_marketing.html">
+                                <span class="material-symbols-outlined text-gray-400 mt-1">campaign</span>
+                                <div>
+                                    <p class="text-xs font-bold uppercase tracking-wide text-corporate-blue">Marketing y Estrategia Digital</p>
+                                    <p class="text-[10px] text-gray-400 mt-1 leading-relaxed">Estrategias de posicionamiento 360°.</p>
+                                </div>
+                            </a>
+                            <a class="flex items-start gap-4 p-4 hover:bg-neutral-gray transition-colors" href="/pages/page_0767787_desarrollo.html">
+                                <span class="material-symbols-outlined text-gray-400 mt-1">web</span>
+                                <div>
+                                    <p class="text-xs font-bold uppercase tracking-wide text-corporate-blue">Desarrollo y Diseño Web</p>
+                                    <p class="text-[10px] text-gray-400 mt-1 leading-relaxed">Plataformas digitales escalables.</p>
+                                </div>
+                            </a>
+                            <a class="flex items-start gap-4 p-4 hover:bg-neutral-gray transition-colors" href="/pages/page_0767788_ciberseguridad.html">
+                                <span class="material-symbols-outlined text-gray-400 mt-1">shield</span>
+                                <div>
+                                    <p class="text-xs font-bold uppercase tracking-wide text-corporate-blue">Ciberseguridad y prevención</p>
+                                    <p class="text-[10px] text-gray-400 mt-1 leading-relaxed">Protección preventiva y gestión de riesgos.</p>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="bg-neutral-gray p-3 text-center mt-2">
+                            <a href="/word.ing/papersing-869836-portfolio.html" class="text-[10px] font-bold uppercase tracking-widest text-primary hover:text-corporate-blue transition-colors">Ver todo el portafolio →</a>
+                        </div>
+                    </div>
+                </div>
+
+                <a class="text-[11px] font-bold uppercase tracking-[0.15em] hover:text-primary transition-colors" href="/word.ing/papersing-869836-contact.html">Contacto</a>
+                <a href="/word.ing/papersing-869836-towt.html" target="_blank">
+                    <button class="mt-4 bg-corporate-blue text-white px-6 py-3 font-bold text-sm uppercase tracking-[0.1em] rounded-md hover:bg-primary hover:text-corporate-blue transition-all">
+                        Agendar Consultoría
+                    </button>
+                </a>
+            </div>
+
+            <button id="menu-toggle" class="lg:hidden p-2 text-corporate-blue focus:outline-none">
+                <span class="material-symbols-outlined text-3xl">menu</span>
+            </button>
+        </div>
+    </nav>
+
+    <div id="mobile-menu" class="mobile-menu fixed top-0 right-0 h-full w-[85%] max-w-[320px] bg-white shadow-2xl z-50 pt-24 px-6">
+        <button id="close-menu" class="absolute top-6 right-6 text-corporate-blue">
+            <span class="material-symbols-outlined text-3xl">close</span>
+        </button>
+        <div class="flex flex-col gap-8 mt-8">
+            <a class="text-base font-bold text-corporate-blue hover:text-primary transition-colors" href="/word.ing/papersing-869836-why-us.html">La Corporación</a>
+            
+            <div>
+                <button id="mobile-services-toggle" class="flex justify-between items-center w-full text-base font-bold text-corporate-blue hover:text-primary transition-colors">
+                    Servicios
+                    <span class="material-symbols-outlined">expand_more</span>
+                </button>
+                <div id="mobile-services-menu" class="mt-4 space-y-4 pl-4 hidden">
+                    <a class="block text-sm text-gray-600 hover:text-primary transition-colors" href="/pages/page_0767785_diseño.html">Diseño & Identidad</a>
+                    <a class="block text-sm text-gray-600 hover:text-primary transition-colors" href="/pages/page_0767786_marketing.html">Marketing y Estrategia Digital</a>
+                    <a class="block text-sm text-gray-600 hover:text-primary transition-colors" href="/pages/page_0767787_desarrollo.html">Desarrollo y Diseño Web</a>
+                    <a class="block text-sm text-gray-600 hover:text-primary transition-colors" href="/pages/page_0767788_ciberseguridad.html">Ciberseguridad y prevención</a>
+                </div>
+            </div>
+
+            <a class="text-base font-bold text-corporate-blue hover:text-primary transition-colors" href="/word.ing/papersing-869836-contact.html">Contacto</a>
+            <a href="/word.ing/papersing-869836-towt.html" target="_blank">
+                <button class="mt-4 bg-corporate-blue text-white px-6 py-3 font-bold text-sm uppercase tracking-[0.1em] rounded-md hover:bg-primary hover:text-corporate-blue transition-all">
+                    Agendar Consultoría
+                </button>
+            </a>
+        </div>
+    </div>
+
+    <section class="relative min-h-screen overflow-hidden flex items-center">
+
+        <div class="absolute inset-0 z-0">
+            <img
+                src="/image/0_2c136ab43ceb4c6e3a4335380d222a63_1764482082338.jpeg"
+                alt="Fondo Hero"
+                class="w-full h-full object-cover"
+            />
+            <div class="absolute inset-0 bg-gradient-to-br from-corporate-blue via-corporate-dark to-corporate-blue opacity-90"></div>
+            <div class="absolute inset-0" style="background-image: radial-gradient(circle at 2px 2px, rgba(254, 189, 1, 0.1) 1px, transparent 0); background-size: 40px 40px;"></div>
+        </div>
+
+        <button
+            onclick="(history.length > 1) ? history.back() : location.href='/'"
+            class="absolute top-6 right-6 z-[9999] inline-flex items-center gap-2 rounded-full border border-white/40 px-6 py-2 text-sm font-medium text-white backdrop-blur-md bg-white/20 hover:bg-white/30 transition"
+        >
+            ← Volver
+        </button>
+
+        <div class="relative z-10 w-full max-w-[1440px] mx-auto px-6 lg:px-12 text-center lg:text-left">
+
+            <div class="flex items-center justify-center lg:justify-start gap-4 mb-6 reveal active">
+                <span class="h-[1px] w-12 bg-primary"></span>
+                <span class="text-[10px] font-bold uppercase tracking-[0.4em] text-primary">
+                    LA CORPORACIÓN
+                </span>
+                <span class="h-[1px] w-12 bg-primary"></span>
+            </div>
+
+            <h1 class="text-5xl md:text-6xl lg:text-[7rem] font-black leading-[0.9] tracking-tighter mb-8 text-white reveal active">
+                GOBERNANZA,<br/>
+                <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary to-white">INNOVACIÓN Y</span><br/>
+                <span class="italic text-primary font-serif">TRANSFORMACIÓN</span>
+            </h1>
+
+            <p class="text-lg md:text-xl text-gray-200 leading-relaxed mb-12 max-w-3xl mx-auto lg:mx-0 font-light reveal active">
+                Clyvernaut Corporation fusiona <span class="font-bold text-white">visión humana y tecnología avanzada</span> para ofrecer soluciones integrales que fortalecen empresas, proyectos y organizaciones.
+            </p>
+
+            <div class="flex justify-center lg:justify-start gap-6 reveal active">
+                <button
+                    onclick="document.getElementById('historia').scrollIntoView({behavior: 'smooth'})"
+                    class="bg-primary text-corporate-blue px-10 py-5 font-bold uppercase tracking-[0.2em] text-[10px] hover:bg-primary/90 hover:translate-x-2 transition-all duration-300 flex items-center gap-3 shadow-2xl shadow-primary/30"
+                >
+                    Conócenos
+                    <span class="material-symbols-outlined text-sm group-hover:translate-x-1 transition-transform">arrow_downward</span>
+                </button>
+            </div>
+        </div>
+    </section>
+
+
+    <section id="historia" class="py-24 lg:py-32 bg-white">
+        <div class="max-w-[1200px] mx-auto px-6 lg:px-12">
+            <div class="mb-20 reveal">
+                <span class="text-primary font-black tracking-[0.4em] uppercase text-xs mb-4 block">Nuestros Orígenes</span>
+                <h2 class="text-5xl md:text-7xl font-black text-corporate-blue tracking-tighter leading-[0.9] mb-8">
+                    Nuestra <span class="text-primary italic font-serif">Historia</span>
+                </h2>
+            </div>
+
+            <div class="space-y-16 reveal">
+                <div class="prose prose-lg max-w-none">
+                    <p class="text-gray-600 leading-relaxed text-lg">
+                        Clyvernaut Corporation nació con un objetivo claro: ofrecer soluciones estratégicas, tecnológicas y organizacionales que impulsaran el crecimiento de empresas y proyectos. Desde sus inicios, hemos integrado diseño, marketing, desarrollo web y ciberseguridad para brindar un enfoque integral a cada cliente.
+                    </p>
+                    
+                    <p class="text-gray-600 leading-relaxed text-lg mt-6">
+                        En enero de 2025, en medio de un proceso de formación autodidacta en ciberseguridad y desarrollo web, Samuel Alfonso Guevara Alegria fundó Clyvernaut Corporation. Pero su origen no nace de la nada: es el resultado de más de cinco años de intentos, aprendizajes y trabajo constante en el ecosistema creativo y digital del norte de Lima, particularmente en Barranca.
+                    </p>
+                </div>
+
+                <div class="relative pl-12 mt-16 space-y-12">
+                    <div class="timeline-line"></div>
+                    
+                    <div class="relative reveal">
+                        <div class="absolute -left-12 top-0 w-6 h-6 rounded-full bg-primary border-4 border-white shadow-lg"></div>
+                        <div class="bg-neutral-gray p-8 border-l-4 border-primary">
+                            <span class="text-primary font-black text-sm uppercase tracking-widest block mb-3">2020</span>
+                            <h3 class="text-2xl font-black text-corporate-blue mb-4">Pixelart</h3>
+                            <p class="text-gray-600 leading-relaxed">
+                                La primera aproximación llegó durante los estudios de Diseño Gráfico Digital. Con el nombre de Pixelart, se lanzó un pequeño emprendimiento enfocado en identidad visual básica y apoyo gráfico para comerciantes locales. Aunque el proyecto no prosperó más allá de unos meses, permitió entender algo fundamental: que el diseño debe responder a un propósito, no solo a una estética.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="relative reveal">
+                        <div class="absolute -left-12 top-0 w-6 h-6 rounded-full bg-primary border-4 border-white shadow-lg"></div>
+                        <div class="bg-neutral-gray p-8 border-l-4 border-primary">
+                            <span class="text-primary font-black text-sm uppercase tracking-widest block mb-3">2021</span>
+                            <h3 class="text-2xl font-black text-corporate-blue mb-4">Empresa Guevara</h3>
+                            <p class="text-gray-600 leading-relaxed">
+                                Se amplió el alcance hacia la gestión de redes sociales y la creación de contenidos digitales. El enfoque era sencillo: acompañar a pequeños negocios en su transición al entorno digital. Aunque logró algunos resultados puntuales, el modelo seguía siendo frágil: carecía de infraestructura técnica, de metodología clara y, sobre todo, de una visión integrada entre lo visual y lo funcional.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="relative reveal">
+                        <div class="absolute -left-12 top-0 w-6 h-6 rounded-full bg-primary border-4 border-white shadow-lg"></div>
+                        <div class="bg-neutral-gray p-8 border-l-4 border-primary">
+                            <span class="text-primary font-black text-sm uppercase tracking-widest block mb-3">2023</span>
+                            <h3 class="text-2xl font-black text-corporate-blue mb-4">Empresa SAGA & Experiencia Municipal</h3>
+                            <p class="text-gray-600 leading-relaxed">
+                                Se buscó ir más allá del diseño gráfico y explorar la intersección entre comunicación visual y presencia digital. Ese mismo año, llegó una oportunidad decisiva: colaborar en el área de imagen institucional de la Municipalidad Provincial de Barranca. Durante 2023 y parte de 2024, se trabajó en diseño de campañas públicas, material informativo, señalética y coherencia visual para iniciativas locales. Fue una experiencia formativa que reveló que la comunicación efectiva requiere rigor, intención y una profunda conexión con el territorio.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="relative reveal">
+                        <div class="absolute -left-12 top-0 w-6 h-6 rounded-full bg-corporate-blue border-4 border-white shadow-lg"></div>
+                        <div class="bg-gradient-to-r from-corporate-blue to-corporate-dark p-8 border-l-4 border-primary text-white">
+                            <span class="text-primary font-black text-sm uppercase tracking-widest block mb-3">Enero 2025</span>
+                            <h3 class="text-2xl font-black mb-4">Nace Clyvernaut Corporation</h3>
+                            <p class="leading-relaxed text-gray-200">
+                                Con las lecciones internalizadas, se decidió replantear completamente el enfoque. Clyvernaut nació no como una agencia más, sino como un espacio híbrido donde el diseño, la tecnología y la estrategia convergen bajo un mismo criterio de calidad. Se definieron tres ejes fundamentales: Diseño y Marketing, Desarrollo Web, y Ciberseguridad.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="relative reveal">
+                        <div class="absolute -left-12 top-0 w-6 h-6 rounded-full bg-primary border-4 border-white shadow-lg"></div>
+                        <div class="bg-neutral-gray p-8 border-l-4 border-primary">
+                            <span class="text-primary font-black text-sm uppercase tracking-widest block mb-3">2025</span>
+                            <h3 class="text-2xl font-black text-corporate-blue mb-4">Consolidación y Formación</h3>
+                            <p class="text-gray-600 leading-relaxed">
+                                Entre enero y julio de 2025, se cursó un diplomado en Marketing Digital, profundizando en estrategias de contenido, métricas de desempeño y funnel de conversión. Paralelamente, se inició un proceso autodidacta sistemático en ciberseguridad y desarrollo web. Durante el resto del año, se dedicó tiempo a estructurar metodologías internas, documentar flujos de trabajo y probar el modelo con casos reales.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="relative reveal">
+                        <div class="absolute -left-12 top-0 w-6 h-6 rounded-full bg-corporate-blue border-4 border-white shadow-lg"></div>
+                        <div class="bg-gradient-to-r from-corporate-blue to-corporate-dark p-8 border-l-4 border-primary text-white">
+                            <span class="text-primary font-black text-sm uppercase tracking-widest block mb-3">2026 - Presente</span>
+                            <h3 class="text-2xl font-black mb-4">Maduración y Compromiso</h3>
+                            <p class="leading-relaxed text-gray-200">
+                                Hoy, Clyvernaut sigue en una etapa de maduración silenciosa. No hay anuncios grandilocuentes ni cartera de clientes multitudinaria. Pero sí hay un compromiso constante con la precisión técnica, la honestidad conceptual y la capacidad de articular soluciones que realmente funcionen en contextos reales. Esta no es la historia de un éxito repentino, sino de una construcción paciente: hecha de errores corregidos, aprendizajes aplicados y una convicción persistente de que el diseño y la tecnología, cuando se alinean con propósito, pueden ser herramientas reales de transformación.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-24 lg:py-32 bg-neutral-gray">
+        <div class="max-w-[1400px] mx-auto px-6 lg:px-12">
+            <div class="text-center mb-20 reveal">
+                <span class="text-primary font-black tracking-[0.4em] uppercase text-xs mb-4 block">Liderazgo</span>
+                <h2 class="text-5xl md:text-7xl font-black text-corporate-blue tracking-tighter leading-[0.9] mb-8">
+                    Nuestro Equipo <br><span class="text-primary italic font-serif">Estratégico</span>
+                </h2>
+                <p class="text-xl text-gray-500 max-w-3xl mx-auto leading-relaxed">
+                    Clyvernaut se sustenta sobre un equipo central de liderazgo estratégico, que combina visión humana, inteligencia artificial y gestión especializada.
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8 mb-16">
+                <div class="team-card bg-white p-8 border-t-4 border-primary shadow-lg reveal">
+                    <div class="w-20 h-20 bg-gradient-to-br from-primary to-primary-dark rounded-full flex items-center justify-center mb-6 shadow-xl">
+                        <span class="material-symbols-outlined text-white text-3xl">person</span>
+                    </div>
+                    <h3 class="text-2xl font-black text-corporate-blue mb-2">Samuel Alfonso Guevara Alegría</h3>
+                    <p class="text-primary font-bold text-sm uppercase tracking-widest mb-4">CEO y Fundador</p>
+                    <p class="text-gray-600 leading-relaxed">
+                        Lidera con intuición estratégica, juicio ético y visión fundacional, definiendo el rumbo, propósito y valores de la corporación. Su rol se centra en custodiar la identidad corporativa y garantizar la coherencia de largo plazo, sin involucrarse en la gestión diaria.
+                    </p>
+                </div>
+
+                <div class="team-card bg-white p-8 border-t-4 border-corporate-blue shadow-lg reveal">
+                    <div class="w-20 h-20 bg-gradient-to-br from-corporate-blue to-corporate-dark rounded-full flex items-center justify-center mb-6 shadow-xl">
+                        <span class="material-symbols-outlined text-white text-3xl">psychology</span>
+                    </div>
+                    <h3 class="text-2xl font-black text-corporate-blue mb-2">Luis Mateo Vargas Costa</h3>
+                    <p class="text-corporate-blue font-bold text-sm uppercase tracking-widest mb-4">IA Central Estratégica</p>
+                    <p class="text-gray-600 leading-relaxed">
+                        Inteligencia artificial diseñada para análisis estratégico, arquitectura normativa, modelado de escenarios y verificación de coherencia institucional. Sus recomendaciones estratégicas son validadas por el CEO, actuando como amplificador cognitivo de la planificación y control estratégico.
+                    </p>
+                </div>
+
+                <div class="team-card bg-white p-8 border-t-4 border-primary shadow-lg reveal">
+                    <div class="w-20 h-20 bg-gradient-to-br from-primary to-primary-dark rounded-full flex items-center justify-center mb-6 shadow-xl">
+                        <span class="material-symbols-outlined text-white text-3xl">account_tree</span>
+                    </div>
+                    <h3 class="text-2xl font-black text-corporate-blue mb-2">Renzo Gabriel Paredes Ugarte</h3>
+                    <p class="text-primary font-bold text-sm uppercase tracking-widest mb-4">Asistente Estratégico Corporativo</p>
+                    <p class="text-gray-600 leading-relaxed">
+                        Garantiza que la estrategia se traduzca en acción efectiva, supervisando la implementación de decisiones, facilitando la coordinación entre áreas y asegurando coherencia operativa. Su rol combina supervisión de alto nivel, asesoría directa al CEO y soporte en la interacción con la IA.
+                    </p>
+                </div>
+            </div>
+
+            <div class="bg-white border-l-4 border-primary p-10 shadow-lg reveal">
+                <h3 class="text-2xl font-black text-corporate-blue mb-6 flex items-center gap-3">
+                    <span class="material-symbols-outlined text-primary text-3xl">hub</span>
+                    Relación y Dinámica del Equipo
+                </h3>
+                <div class="grid md:grid-cols-3 gap-6">
+                    <div class="text-center p-6 bg-neutral-gray">
+                        <div class="w-16 h-16 bg-primary rounded-full flex items-center justify-center mx-auto mb-4">
+                            <span class="text-corporate-blue font-black text-2xl">01</span>
+                        </div>
+                        <p class="text-gray-700 font-semibold">El CEO define el <span class="text-corporate-blue font-black">"qué"</span> y el <span class="text-corporate-blue font-black">"por qué"</span> de cada decisión</p>
+                    </div>
+                    <div class="text-center p-6 bg-neutral-gray">
+                        <div class="w-16 h-16 bg-corporate-blue rounded-full flex items-center justify-center mx-auto mb-4">
+                            <span class="text-white font-black text-2xl">02</span>
+                        </div>
+                        <p class="text-gray-700 font-semibold">La IA analiza y propone el <span class="text-corporate-blue font-black">"cómo estructural"</span></p>
+                    </div>
+                    <div class="text-center p-6 bg-neutral-gray">
+                        <div class="w-16 h-16 bg-primary rounded-full flex items-center justify-center mx-auto mb-4">
+                            <span class="text-corporate-blue font-black text-2xl">03</span>
+                        </div>
+                        <p class="text-gray-700 font-semibold">El AEC traduce estas decisiones en <span class="text-corporate-blue font-black">acciones operativas</span></p>
+                    </div>
+                </div>
+                <p class="text-gray-600 mt-8 text-center max-w-3xl mx-auto leading-relaxed italic">
+                    Este modelo asegura un equilibrio entre visión fundacional, análisis sistémico y aplicación práctica, consolidando liderazgo sólido, coherente y confiable.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-24 lg:py-32 bg-corporate-blue text-white relative overflow-hidden">
+        <div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(circle at 2px 2px, rgba(254, 189, 1, 0.3) 1px, transparent 0); background-size: 40px 40px;"></div>
+        <div class="max-w-[1200px] mx-auto px-6 lg:px-12 relative z-10">
+            <div class="text-center mb-20 reveal">
+                <span class="text-primary font-black tracking-[0.4em] uppercase text-xs mb-4 block">Nuestros Valores</span>
+                <h2 class="text-5xl md:text-7xl font-black tracking-tighter leading-[0.9] mb-8">
+                    Filosofía <span class="text-primary italic font-serif">Corporativa</span>
+                </h2>
+                <p class="text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed">
+                    Clyvernaut no opera siguiendo la inmediatez ni la improvisación: prioriza coherencia estratégica, control estructural y sostenibilidad a largo plazo.
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="bg-white/5 backdrop-blur-sm border border-white/10 p-10 reveal hover:bg-white/10 transition-all duration-300">
+                    <span class="material-symbols-outlined text-primary text-5xl mb-6 block">verified</span>
+                    <h3 class="text-2xl font-black mb-4">Coherencia Estratégica</h3>
+                    <p class="text-gray-300 leading-relaxed">
+                        Cada acción se alinea con la misión, visión y valores. No hay decisiones aisladas: todo responde a un propósito institucional verificable.
+                    </p>
+                </div>
+
+                <div class="bg-white/5 backdrop-blur-sm border border-white/10 p-10 reveal hover:bg-white/10 transition-all duration-300">
+                    <span class="material-symbols-outlined text-primary text-5xl mb-6 block">engineering</span>
+                    <h3 class="text-2xl font-black mb-4">Control Estructural</h3>
+                    <p class="text-gray-300 leading-relaxed">
+                        La organización crece de manera intencional y gobernable. Expandimos solo cuando podemos mantener estándares de calidad y coherencia operativa.
+                    </p>
+                </div>
+
+                <div class="bg-white/5 backdrop-blur-sm border border-white/10 p-10 reveal hover:bg-white/10 transition-all duration-300">
+                    <span class="material-symbols-outlined text-primary text-5xl mb-6 block">eco</span>
+                    <h3 class="text-2xl font-black mb-4">Sostenibilidad a Largo Plazo</h3>
+                    <p class="text-gray-300 leading-relaxed">
+                        Aseguramos la continuidad económica, operativa, ética y existencial de la corporación. Priorizamos permanencia sobre crecimiento acelerado.
+                    </p>
+                </div>
+            </div>
+
+            <div class="mt-16 p-10 bg-primary/10 border-l-4 border-primary reveal">
+                <p class="text-xl leading-relaxed font-light">
+                    <span class="font-black text-primary">Velocidad, improvisación o conveniencia momentánea</span> siempre quedan subordinadas a estos principios, preservando la integridad y resiliencia institucional.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-24 lg:py-32 bg-white">
+        <div class="max-w-[1400px] mx-auto px-6 lg:px-12">
+            <div class="text-center mb-20 reveal">
+                <span class="text-primary font-black tracking-[0.4em] uppercase text-xs mb-4 block">Qué Ofrecemos</span>
+                <h2 class="text-5xl md:text-7xl font-black text-corporate-blue tracking-tighter leading-[0.9] mb-8">
+                    Servicios <span class="text-primary italic font-serif">Actuales</span>
+                </h2>
+                <p class="text-xl text-gray-500 max-w-3xl mx-auto leading-relaxed">
+                    Clyvernaut ofrece soluciones integrales y coherentes en entornos digitales y tradicionales.
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
+                <div class="group bg-neutral-gray p-8 border-t-4 border-primary hover:shadow-2xl transition-all duration-300 reveal">
+                    <span class="material-symbols-outlined text-primary text-5xl mb-4 block group-hover:scale-110 transition-transform">brush</span>
+                    <h3 class="text-xl font-black text-corporate-blue mb-3 uppercase">Diseño Gráfico</h3>
+                    <p class="text-gray-600 text-sm leading-relaxed">
+                        Branding, piezas gráficas, material institucional y contenido digital.
+                    </p>
+                </div>
+
+                <div class="group bg-neutral-gray p-8 border-t-4 border-primary hover:shadow-2xl transition-all duration-300 reveal">
+                    <span class="material-symbols-outlined text-primary text-5xl mb-4 block group-hover:scale-110 transition-transform">campaign</span>
+                    <h3 class="text-xl font-black text-corporate-blue mb-3 uppercase">Marketing Digital</h3>
+                    <p class="text-gray-600 text-sm leading-relaxed">
+                        Estrategias de posicionamiento, campañas y análisis de mercado.
+                    </p>
+                </div>
+
+                <div class="group bg-neutral-gray p-8 border-t-4 border-primary hover:shadow-2xl transition-all duration-300 reveal">
+                    <span class="material-symbols-outlined text-primary text-5xl mb-4 block group-hover:scale-110 transition-transform">web</span>
+                    <h3 class="text-xl font-black text-corporate-blue mb-3 uppercase">Desarrollo Web</h3>
+                    <p class="text-gray-600 text-sm leading-relaxed">
+                        Plataformas digitales funcionales, escalables y adaptables.
+                    </p>
+                </div>
+
+                <div class="group bg-neutral-gray p-8 border-t-4 border-primary hover:shadow-2xl transition-all duration-300 reveal">
+                    <span class="material-symbols-outlined text-primary text-5xl mb-4 block group-hover:scale-110 transition-transform">shield</span>
+                    <h3 class="text-xl font-black text-corporate-blue mb-3 uppercase">Ciberseguridad</h3>
+                    <p class="text-gray-600 text-sm leading-relaxed">
+                        Protección, auditoría y gestión de riesgos digitales.
+                    </p>
+                </div>
+            </div>
+
+            <div class="bg-gradient-to-r from-corporate-blue to-corporate-dark p-12 md:p-16 text-white reveal">
+                <div class="max-w-3xl">
+                    <h3 class="text-3xl md:text-5xl font-black mb-6 leading-tight">
+                        Presencia Híbrida: <span class="text-primary italic font-serif">Digital y Física</span>
+                    </h3>
+                    <p class="text-xl text-gray-300 leading-relaxed mb-8">
+                        Integramos canales físicos y digitales para ofrecer flexibilidad y continuidad operativa, adaptándonos a las necesidades reales de cada proyecto.
+                    </p>
+                    <div class="flex items-start gap-4 bg-white/10 p-6 border-l-4 border-primary">
+                        <span class="material-symbols-outlined text-primary text-3xl">target</span>
+                        <div>
+                            <p class="font-bold text-lg mb-2">Nuestro Objetivo</p>
+                            <p class="text-gray-300 leading-relaxed">
+                                Fortalecer empresas y proyectos, desde emprendimientos emergentes hasta organizaciones internacionales, promoviendo evolución sostenible y competitiva.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        function reveal() {
+            document.querySelectorAll(".reveal").forEach(el => {
+                const windowHeight = window.innerHeight;
+                const elementTop = el.getBoundingClientRect().top;
+                const elementVisible = 150;
+                if (elementTop < windowHeight - elementVisible) {
+                    el.classList.add("active");
+                }
+            });
+        }
+        window.addEventListener("scroll", reveal);
+        reveal();
+
+        const menuToggle = document.getElementById('menu-toggle');
+        const closeMenu = document.getElementById('close-menu');
+        const overlay = document.getElementById('overlay');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const servicesToggle = document.getElementById('mobile-services-toggle');
+        const servicesMenu = document.getElementById('mobile-services-menu');
+
+        function openMenu() {
+            mobileMenu.classList.add('open');
+            overlay.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeMenuHandler() {
+            mobileMenu.classList.remove('open');
+            overlay.classList.remove('active');
+            document.body.style.overflow = '';
+            servicesMenu.classList.add('hidden');
+        }
+
+        menuToggle.addEventListener('click', openMenu);
+        closeMenu.addEventListener('click', closeMenuHandler);
+        overlay.addEventListener('click', closeMenuHandler);
+
+        if (servicesToggle && servicesMenu) {
+            servicesToggle.addEventListener('click', () => {
+                servicesMenu.classList.toggle('hidden');
+                const icon = servicesToggle.querySelector('.material-symbols-outlined');
+                icon.textContent = servicesMenu.classList.contains('hidden') ? 'expand_more' : 'expand_less';
+            });
+        }
+
+        const navbar = document.querySelector('nav');
+        let lastScrollTop = 0;
+
+        window.addEventListener('scroll', () => {
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+
+            if (scrollTop <= 0) {
+                navbar.classList.remove('nav-hidden');
+                lastScrollTop = 0;
+                return;
+            }
+
+            if (scrollTop > lastScrollTop) {
+                navbar.classList.add('nav-hidden');
+            } else {
+                navbar.classList.remove('nav-hidden');
+            }
+
+            lastScrollTop = scrollTop;
+        });
+
+        function goBackWithWarning() {
+            window.history.back();
+        }
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,938 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Desarrollo Web & UI/UX | Clyvernaut Corporation</title>
+    <meta name="description" content="Diseñamos y desarrollamos sitios web, plataformas digitales y experiencias UI/UX enfocadas en rendimiento, usabilidad y objetivos reales de negocio." />
+    <meta name="keywords" content="Desarrollo Web, UI/UX, Diseño de Interfaces, Experiencia de Usuario, Plataformas Digitales, Rendimiento Web, Usabilidad, Diseño Responsivo" />
+    <meta name="author" content="Clyvernaut Corporation" />
+    <meta name="robots" content="index, follow" />
+    <link rel="icon" href="/assets/32x32.png" type="image/x-icon" />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;600;800;900&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        primary: "#febd01",
+                        "primary-dark": "#e5aa00",
+                        "corporate-blue": "#0d2139",
+                        "corporate-dark": "#061221",
+                        "neutral-gray": "#f8fafc",
+                    },
+                    animation: {
+                        'spin-slow': 'spin 20s linear infinite',
+                        'float': 'float 6s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-20px)' },
+                        }
+                    }
+                },
+            },
+        }
+    </script>
+    <style>
+        nav {
+            transition: transform 0.35s ease, opacity 0.25s ease;
+        }
+
+        .nav-hidden {
+            transform: translateY(-100%);
+            opacity: 0;
+        }
+
+        body {
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .glass-nav {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+
+        .text-gradient {
+            background: linear-gradient(to right, #0d2139, #febd01);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .mobile-menu {
+            transform: translateX(100%);
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+        .mobile-menu.open {
+            transform: translateX(0);
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .overlay {
+            background: rgba(0, 0, 0, 0.4);
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease;
+        }
+        .overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        @media (max-width: 1023px) {
+            .no-scrollbar::-webkit-scrollbar {
+                display: none;
+            }
+            .no-scrollbar {
+                -ms-overflow-style: none;
+                scrollbar-width: none;
+            }
+        }
+
+        .plan-unavailable {
+            position: relative;
+            pointer-events: none;
+            user-select: none;
+            transition: all 0.5s ease;
+        }
+
+        .plan-unavailable .grid, 
+        .plan-unavailable h3 {
+            filter: blur(8px);
+            opacity: 0.4;
+            transition: filter 0.5s ease;
+        }
+
+        .plan-unavailable::after {
+            content: "PRÓXIMAMENTE";
+            position: absolute;
+            top: 55%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+
+            color: #0d2139;
+            font-family: 'Inter', sans-serif;
+            font-weight: 900;
+            font-size: 3rem;
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            
+            -webkit-text-stroke: 1px rgba(13, 33, 57, 0.3); 
+            text-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            
+            z-index: 20;
+            white-space: nowrap;
+            opacity: 0.8;
+        }
+
+        @media (max-width: 768px) {
+            .plan-unavailable::after {
+                font-size: 1.5rem;
+                letter-spacing: 0.1em;
+            }
+        }
+
+        .cart-sidebar {
+            position: sticky;
+            top: 120px;
+            width: 320px;
+            height: fit-content;
+            background: white;
+            border: 1px solid #e5e7eb;
+            box-shadow: 0 12px 32px rgba(0, 0, 0, 0.08);
+            z-index: 20;
+        }
+
+        @media (max-width: 1023px) {
+            .cart-sidebar {
+                display: none;
+            }
+        }
+
+</style>
+</head>
+<body class="bg-neutral-gray overflow-x-hidden">
+    <div id="overlay" class="overlay fixed inset-0 z-40 lg:hidden"></div>
+    <nav class="fixed top-0 left-0 w-full h-0 overflow-hidden opacity-0 pointer-events-none z-50">
+      <div class="max-w-[1440px] mx-auto px-6 lg:px-12 h-20 lg:h-24 flex items-center justify-between">
+          <div class="flex items-center cursor-pointer">
+              <a href="/index.html">
+                  <img 
+                      src="/image/Logo_Spyther.png"
+                      alt="Clyvernaut Corporation Logo"
+                      class="h-10 lg:h-12 w-auto object-contain transition-transform duration-300 hover:scale-105"
+                  />
+              </a>
+          </div>
+            <div class="hidden lg:flex items-center gap-12">
+                <a class="text-[11px] font-bold uppercase tracking-[0.15em] hover:text-primary transition-colors relative after:content-[''] after:absolute after:-bottom-2 after:left-0 after:w-0 after:h-[2px] after:bg-primary after:transition-all hover:after:w-full" href="/word.ing/papersing-869836-why-us.html">La Corporación</a>
+
+                <div class="relative group">
+                    <button class="text-[11px] font-bold uppercase tracking-[0.15em] hover:text-primary transition-colors flex items-center gap-1 py-6">
+                        Servicios
+                        <span class="material-symbols-outlined text-sm group-hover:rotate-180 transition-transform duration-300">expand_more</span>
+                    </button>
+                    <div class="absolute top-full -left-10 w-[380px] bg-white border border-gray-100 shadow-[0_30px_60px_-15px_rgba(0,0,0,0.1)] opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform translate-y-4 group-hover:translate-y-0 p-2">
+                        <div class="grid gap-1">
+                            <a class="flex items-start gap-4 p-4 hover:bg-neutral-gray transition-colors" href="/pages/page_0767785_diseño.html">
+                                <span class="material-symbols-outlined text-gray-400 mt-1">brush</span>
+                                <div>
+                                    <p class="text-xs font-bold uppercase tracking-wide text-corporate-blue">Diseño & Identidad</p>
+                                    <p class="text-[10px] text-gray-400 mt-1 leading-relaxed">Identidad visual y narrativa de marca.</p>
+                                </div>
+                            </a>
+                            <a class="flex items-start gap-4 p-4 hover:bg-neutral-gray transition-colors" href="/pages/page_0767786_marketing.html">
+                                <span class="material-symbols-outlined text-gray-400 mt-1">campaign</span>
+                                <div>
+                                    <p class="text-xs font-bold uppercase tracking-wide text-corporate-blue">Marketing y Estrategia Digital</p>
+                                    <p class="text-[10px] text-gray-400 mt-1 leading-relaxed">Estrategias de posicionamiento 360°.</p>
+                                </div>
+                            </a>
+                            <a class="flex items-start gap-4 p-4 hover:bg-neutral-gray transition-colors" href="/pages/page_0767787_desarrollo.html">
+                                <span class="material-symbols-outlined text-gray-400 mt-1">web</span>
+                                <div>
+                                    <p class="text-xs font-bold uppercase tracking-wide text-corporate-blue">Desarrollo y Diseño Web</p>
+                                    <p class="text-[10px] text-gray-400 mt-1 leading-relaxed">Plataformas digitales escalables.</p>
+                                </div>
+                            </a>
+                            <a class="flex items-start gap-4 p-4 hover:bg-neutral-gray transition-colors" href="/pages/page_0767788_ciberseguridad.html">
+                                <span class="material-symbols-outlined text-gray-400 mt-1">shield</span>
+                                <div>
+                                    <p class="text-xs font-bold uppercase tracking-wide text-corporate-blue">Ciberseguridad y prevención</p>
+                                    <p class="text-[10px] text-gray-400 mt-1 leading-relaxed">Protección preventiva y gestión de riesgos.</p>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="bg-neutral-gray p-3 text-center mt-2">
+                            <a href="/word.ing/papersing-869836-portfolio.html" class="text-[10px] font-bold uppercase tracking-widest text-primary hover:text-corporate-blue transition-colors">Ver todo el portafolio →</a>
+                        </div>
+                    </div>
+                </div>
+                <a class="text-[11px] font-bold uppercase tracking-[0.15em] hover:text-primary transition-colors" href="/word.ing/papersing-869836-contact.html">Contacto</a>
+                <a href="/word.ing/papersing-869836-towt.html" target="_blank">
+                    <button class="mt-4 bg-corporate-blue text-white px-6 py-3 font-bold text-sm uppercase tracking-[0.1em] rounded-md hover:bg-primary hover:text-corporate-blue transition-all">
+                        Agendar Consultoría
+                    </button>
+                </a>
+            </div>
+            <button id="menu-toggle" class="lg:hidden p-2 text-corporate-blue focus:outline-none">
+                <span class="material-symbols-outlined text-3xl">menu</span>
+            </button>
+        </div>
+    </nav>
+    <div id="mobile-menu" class="mobile-menu fixed top-0 right-0 h-full w-[85%] max-w-[320px] bg-white shadow-2xl z-50 pt-24 px-6">
+        <button id="close-menu" class="absolute top-6 right-6 text-corporate-blue">
+            <span class="material-symbols-outlined text-3xl">close</span>
+        </button>
+        <div class="flex flex-col gap-8 mt-8">
+            <a class="text-base font-bold text-corporate-blue hover:text-primary transition-colors" href="/word.ing/papersing-869836-why-us.html">La Corporación</a>
+            
+            <div>
+                <button id="mobile-services-toggle" class="flex justify-between items-center w-full text-base font-bold text-corporate-blue hover:text-primary transition-colors">
+                    Servicios
+                    <span class="material-symbols-outlined">expand_more</span>
+                </button>
+                <div id="mobile-services-menu" class="mt-4 space-y-4 pl-4 hidden">
+                    <a class="block text-sm text-gray-600 hover:text-primary transition-colors" href="/pages/page_0767785_diseño.html">Diseño & Identidad</a>
+                    <a class="block text-sm text-gray-600 hover:text-primary transition-colors" href="/pages/page_0767786_marketing.html">Marketing y Estrategia Digital</a>
+                    <a class="block text-sm text-gray-600 hover:text-primary transition-colors" href="/pages/page_0767787_desarrollo.html">Desarrollo y Diseño Web</a>
+                    <a class="block text-sm text-gray-600 hover:text-primary transition-colors" href="/pages/page_0767788_ciberseguridad.html">Ciberseguridad y prevención</a>
+                </div>
+            </div>
+
+            <a class="text-base font-bold text-corporate-blue hover:text-primary transition-colors" href="/word.ing/papersing-869836-contact.html">Contacto</a>
+            <a href="/word.ing/papersing-869836-towt.html" target="_blank">
+                <button class="mt-4 bg-corporate-blue text-white px-6 py-3 font-bold text-sm uppercase tracking-[0.1em] rounded-md hover:bg-primary hover:text-corporate-blue transition-all">
+                    Agendar Consultoría
+                </button>
+            </a>
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="relative min-h-screen overflow-hidden flex items-center">
+        <div class="absolute inset-0 z-0">
+            <img
+                src="/image/999999999999999999923423472364836478234.jpeg"
+                alt="Hero background"
+                class="w-full h-full object-cover"
+            />
+            <div class="absolute inset-0 bg-gradient-to-r from-corporate-blue via-corporate-blue/90 to-transparent"></div>
+        </div>
+        <button
+            onclick="goBackWithWarning()"
+            class="absolute top-6 right-6 z-20 inline-flex items-center gap-2 rounded-full border border-white/40 px-6 py-2 text-sm font-medium text-white backdrop-blur-md bg-white/10 hover:bg-white/20 transition"
+        >
+            ← Volver
+        </button>
+        <div class="relative z-10 w-full max-w-[1440px] mx-auto px-6 lg:px-12">
+            <div class="max-w-2xl">
+                <div class="flex items-center gap-4 mb-6">
+                    <span class="h-[1px] w-12 bg-primary"></span>
+                    <span class="text-[10px] font-bold uppercase tracking-[0.4em] text-primary">
+                        Desarrollo y Diseño Web
+                    </span>
+                </div>
+                <h1 class="text-5xl md:text-6xl lg:text-[6rem] font-black leading-[0.9] tracking-tighter mb-8 text-white">
+                    WEB<br />
+                    <span class="italic text-primary font-serif">FUNCIONAL</span><br />
+                    Y ESCALABLE
+                </h1>
+                <p class="text-lg md:text-xl text-gray-200 leading-relaxed mb-12 font-light border-l-2 border-primary pl-6">
+                    Diseñamos y desarrollamos sitios web, plataformas digitales y experiencias UI/UX enfocadas en rendimiento, usabilidad y objetivos reales de negocio.
+                </p>
+                <a href="#servicios" class="inline-block">
+                    <button
+                        class="bg-primary text-corporate-blue px-10 py-5 font-bold uppercase tracking-[0.2em] text-[10px]
+                            hover:bg-yellow-300 hover:translate-x-2 transition-all duration-300
+                            flex items-center gap-3 shadow-2xl shadow-primary/30"
+                    >
+                        Ver Servicios
+                        <span class="material-symbols-outlined text-sm">arrow_forward</span>
+                    </button>
+                </a>
+            </div>
+        </div>
+    </section>
+    <section class="py-24 bg-white" id="servicios">
+        <div class="max-w-[1440px] mx-auto px-6 lg:px-12">
+            <div class="max-w-4xl mx-auto text-center reveal">
+                <div class="flex items-center justify-center gap-4 mb-6">
+                    <span class="h-[1px] w-12 bg-primary"></span>
+                    <span class="text-[10px] font-bold uppercase tracking-[0.4em] text-primary">SERVICIOS PROFESIONALES</span>
+                    <span class="h-[1px] w-12 bg-primary"></span>
+                </div>
+                <h2 class="text-4xl md:text-5xl font-black text-corporate-blue mb-6">
+                    Catálogo de Servicios de Desarrollo Web
+                </h2>
+                <p class="text-lg text-gray-600 leading-relaxed">
+                    Creamos sitios web, interfaces UI/UX y soluciones digitales a medida. Selecciona los servicios que necesitas y solicita una cotización personalizada para tu proyecto.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Catálogo de Servicios con Carrito Lateral -->
+    <section class="py-16 bg-neutral-gray">
+        <div class="max-w-[1440px] mx-auto px-6 lg:px-12">
+            <div class="flex gap-8 items-start">
+                <div class="flex-1">
+                    <div
+                        class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+                        id="services-grid"
+                    >
+                    </div>
+                </div>
+                <aside class="cart-sidebar hidden lg:block" id="cart-sidebar">
+
+                    <div class="p-6 border-b border-gray-200 bg-white">
+                        <h3 class="text-lg font-black uppercase tracking-wide text-corporate-blue">
+                            Servicios Seleccionados
+                        </h3>
+                        <p class="text-xs text-gray-500 mt-1" id="cart-count">
+                            0 servicios
+                        </p>
+                    </div>
+
+                    <div class="p-6" id="cart-items">
+                        <p class="text-sm text-gray-400 text-center py-8">
+                            No has seleccionado servicios aún
+                        </p>
+                    </div>
+
+                    <div
+                        class="p-6 border-t border-gray-200 bg-neutral-gray"
+                        id="cart-actions"
+                        style="display: none;"
+                    >
+                        <button
+                            onclick="sendWhatsAppRequest('solicitar')"
+                            class="w-full bg-corporate-blue text-white py-4 px-6 font-bold text-sm uppercase tracking-wide hover:bg-primary hover:text-corporate-blue transition-all mb-3 flex items-center justify-center gap-2"
+                        >
+                            <span class="material-symbols-outlined text-lg">send</span>
+                            Solicitar
+                        </button>
+
+                        <button
+                            onclick="sendWhatsAppRequest('consultar')"
+                            class="w-full border-2 border-corporate-blue text-corporate-blue py-4 px-6 font-bold text-sm uppercase tracking-wide hover:bg-corporate-blue hover:text-white transition-all flex items-center justify-center gap-2"
+                        >
+                            <span class="material-symbols-outlined text-lg">chat</span>
+                            Consultar
+                        </button>
+                    </div>
+
+                </aside>
+
+            </div>
+        </div>
+        <div
+            class="lg:hidden fixed bottom-6 right-6 z-50"
+            id="mobile-cart-button"
+            style="display: none;"
+        >
+            <button
+                onclick="showMobileCart()"
+                class="bg-corporate-blue text-white rounded-full w-16 h-16 shadow-2xl flex items-center justify-center relative"
+            >
+                <span class="material-symbols-outlined text-2xl">
+                    shopping_bag
+                </span>
+                <span
+                    class="absolute -top-2 -right-2 bg-primary text-corporate-blue w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold"
+                    id="mobile-cart-count"
+                >
+                    0
+                </span>
+            </button>
+        </div>
+    </section>
+    
+    <!-- Sección de Planes Predefinidos -->
+    <section class="py-24 bg-white">
+        <div class="max-w-[1440px] mx-auto px-6 lg:px-12">
+            <div class="text-center mb-16 reveal">
+                <div class="flex items-center justify-center gap-4 mb-6">
+                    <span class="h-[1px] w-12 bg-primary"></span>
+                    <span class="text-[10px] font-bold uppercase tracking-[0.4em] text-primary">PLANES PROFESIONALES</span>
+                    <span class="h-[1px] w-12 bg-primary"></span>
+                </div>
+                <h2 class="text-4xl md:text-5xl font-black text-corporate-blue mb-6">Planes de Desarrollo Web a Medida</h2>
+                <p class="text-lg text-gray-600 max-w-3xl mx-auto">
+                Diseñamos soluciones web, plataformas digitales y experiencias UI/UX adaptadas a tu proyecto. Escoge el plan que se ajuste a tus necesidades técnicas y objetivos estratégicos.
+                </p>
+            </div>
+
+            <div class="mb-16">
+                <h3 class="text-2xl font-black text-corporate-blue mb-8 text-center uppercase tracking-wide">Nivel Básico</h3>
+                <div class="grid md:grid-cols-3 gap-6" id="basic-plans"></div>
+            </div>
+
+            <div class="mb-16 plan-unavailable"> <h3 class="text-2xl font-black text-corporate-blue mb-8 text-center uppercase tracking-wide">Nivel Intermedio</h3>
+                <div class="grid md:grid-cols-3 gap-6" id="intermediate-plans"></div>
+            </div>
+
+            <div class="mb-16 plan-unavailable"> <h3 class="text-2xl font-black text-corporate-blue mb-8 text-center uppercase tracking-wide">Nivel Plus</h3>
+                <div class="grid md:grid-cols-3 gap-6" id="plus-plans"></div>
+            </div>
+
+            <div class="mb-16 plan-unavailable"> <h3 class="text-2xl font-black text-corporate-blue mb-8 text-center uppercase tracking-wide">Nivel Ultra</h3>
+                <div class="grid md:grid-cols-3 gap-6" id="ultra-plans"></div>
+            </div>
+
+            <div class="plan-unavailable"> <h3 class="text-2xl font-black text-corporate-blue mb-8 text-center uppercase tracking-wide">Nivel Pro</h3>
+                <div class="grid md:grid-cols-3 gap-6" id="pro-plans"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Modal para Carrito Móvil -->
+    <div id="mobile-cart-modal" class="fixed inset-0 bg-black bg-opacity-50 z-[200] hidden lg:hidden">
+        <div class="absolute bottom-0 left-0 right-0 bg-white rounded-t-3xl max-h-[80vh] overflow-y-auto">
+            <div class="p-6 border-b border-gray-200 sticky top-0 bg-white z-10 flex justify-between items-center">
+                <div>
+                    <h3 class="text-lg font-black uppercase tracking-wide text-corporate-blue">Servicios Seleccionados</h3>
+                    <p class="text-xs text-gray-500 mt-1" id="mobile-cart-count-text">0 servicios</p>
+                </div>
+                <button onclick="closeMobileCart()" class="text-corporate-blue">
+                    <span class="material-symbols-outlined text-2xl">close</span>
+                </button>
+            </div>
+            
+            <div class="p-6" id="mobile-cart-items">
+                <p class="text-sm text-gray-400 text-center py-8">No has seleccionado servicios aún</p>
+            </div>
+
+            <div class="p-6 border-t border-gray-200 bg-neutral-gray sticky bottom-0" id="mobile-cart-actions" style="display: none;">
+                <button onclick="sendWhatsAppRequest('solicitar')" class="w-full bg-corporate-blue text-white py-4 px-6 font-bold text-sm uppercase tracking-wide hover:bg-primary hover:text-corporate-blue transition-all mb-3 flex items-center justify-center gap-2">
+                    <span class="material-symbols-outlined text-lg">send</span>
+                    Solicitar
+                </button>
+                <button onclick="sendWhatsAppRequest('consultar')" class="w-full border-2 border-corporate-blue text-corporate-blue py-4 px-6 font-bold text-sm uppercase tracking-wide hover:bg-corporate-blue hover:text-white transition-all flex items-center justify-center gap-2">
+                    <span class="material-symbols-outlined text-lg">chat</span>
+                    Consultar
+                </button>
+            </div>
+        </div>
+    </div>
+    <script>
+        function reveal() {
+            document.querySelectorAll(".reveal").forEach(el => {
+                const windowHeight = window.innerHeight;
+                const elementTop = el.getBoundingClientRect().top;
+                const elementVisible = 150;
+                if (elementTop < windowHeight - elementVisible) {
+                    el.classList.add("active");
+                }
+            });
+        }
+        window.addEventListener("scroll", reveal);
+        reveal();
+
+        // Menú móvil
+        const menuToggle = document.getElementById('menu-toggle');
+        const closeMenu = document.getElementById('close-menu');
+        const overlay = document.getElementById('overlay');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const servicesToggle = document.getElementById('mobile-services-toggle');
+        const servicesMenu = document.getElementById('mobile-services-menu');
+
+        function openMenu() {
+            mobileMenu.classList.add('open');
+            overlay.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeMenuHandler() {
+            mobileMenu.classList.remove('open');
+            overlay.classList.remove('active');
+            document.body.style.overflow = '';
+            servicesMenu.classList.add('hidden');
+        }
+
+        menuToggle.addEventListener('click', openMenu);
+        closeMenu.addEventListener('click', closeMenuHandler);
+        overlay.addEventListener('click', closeMenuHandler);
+
+        if (servicesToggle && servicesMenu) {
+            servicesToggle.addEventListener('click', () => {
+                servicesMenu.classList.toggle('hidden');
+                const icon = servicesToggle.querySelector('.material-symbols-outlined');
+                icon.textContent = servicesMenu.classList.contains('hidden') ? 'expand_more' : 'expand_less';
+            });
+        }
+        const services = [
+            {id: 1, name: "Desarrollo Web Corporativo", description: "Sitio web profesional para presentar tu negocio, generar confianza y captar clientes."},
+            {id: 2, name: "Landing Pages de Conversión", description: "Páginas enfocadas en generar contactos, ventas o solicitudes de clientes."},
+            {id: 3, name: "Sitios Web Autoadministrables", description: "Webs que puedes actualizar tú mismo sin depender de terceros."},
+            {id: 4, name: "Tiendas Online (E-commerce)", description: "Tiendas virtuales listas para vender con pagos, productos y gestión sencilla."},
+            {id: 5, name: "Rediseño de Sitios Web", description: "Renovación de sitios web antiguos para mejorar imagen, velocidad y resultados."},
+            {id: 6, name: "Optimización de Velocidad Web", description: "Mejora del rendimiento para que tu web cargue rápido y no pierda clientes."},
+            {id: 7, name: "SEO Básico para Web", description: "Optimización esencial para aparecer en Google y atraer visitas reales."},
+            {id: 8, name: "Integración de Formularios y WhatsApp", description: "Conexión directa para que los clientes te contacten fácilmente."},
+            {id: 9, name: "Mantenimiento Web", description: "Soporte, actualizaciones y monitoreo para que tu web funcione siempre."}
+        ];
+        let cart = {};
+
+        function saveCart() {
+            localStorage.setItem("clyvernaut_cart", JSON.stringify(cart));
+        }
+
+        function loadCart() {
+            const saved = localStorage.getItem("clyvernaut_cart");
+            if (saved) {
+                cart = JSON.parse(saved);
+            }
+        }
+
+        function renderServices() {
+            const grid = document.getElementById('services-grid');
+            grid.innerHTML = services.map(service => `
+                <div class="service-card bg-white border border-gray-200 p-6 rounded-lg shadow-sm hover:shadow-lg" data-service="${service.id}">
+                    <div class="flex items-start justify-between mb-4">
+                        <span class="material-symbols-outlined text-primary text-3xl">design_services</span>
+                        <div class="flex items-center gap-2">
+                            <button onclick="decrementService(${service.id})" class="quantity-btn w-8 h-8 rounded-full border-2 border-gray-300 flex items-center justify-center text-gray-600 disabled:opacity-30" disabled>
+                                <span class="material-symbols-outlined">remove</span>
+                            </button>
+                            <span id="qty-${service.id}" class="w-8 text-center font-bold text-corporate-blue">0</span>
+                            <button onclick="incrementService(${service.id})" class="quantity-btn w-8 h-8 rounded-full bg-corporate-blue text-white flex items-center justify-center">
+                                <span class="material-symbols-outlined">add</span>
+                            </button>
+                        </div>
+                    </div>
+                    <h3 class="font-bold text-corporate-blue">${service.name}</h3>
+                    <p class="text-sm text-gray-600">${service.description}</p>
+                </div>
+            `).join('');
+        }
+
+        function incrementService(id) {
+            if (!cart[id]) {
+                cart[id] = { quantity: 0, name: services.find(s => s.id === id).name };
+            }
+            cart[id].quantity++;
+            saveCart();
+            updateUI(id);
+        }
+
+        function decrementService(id) {
+            if (cart[id]) {
+                cart[id].quantity--;
+                if (cart[id].quantity <= 0) delete cart[id];
+                saveCart();
+                updateUI(id);
+            }
+        }
+
+        function updateUI(id) {
+            const qty = cart[id]?.quantity || 0;
+            document.getElementById(`qty-${id}`).textContent = qty;
+
+            const btn = document.querySelector(`[data-service="${id}"] button[onclick="decrementService(${id})"]`);
+            btn.disabled = qty === 0;
+
+            updateCart();
+        }
+
+        function updateCart() {
+            const cartItems = document.getElementById('cart-items');
+            const mobileCartItems = document.getElementById('mobile-cart-items');
+            const cartActions = document.getElementById('cart-actions');
+            const mobileCartActions = document.getElementById('mobile-cart-actions');
+            const mobileCartButton = document.getElementById('mobile-cart-button');
+            const cartCount = document.getElementById('cart-count');
+            const mobileCartCountText = document.getElementById('mobile-cart-count-text');
+            const mobileCartCountBadge = document.getElementById('mobile-cart-count');
+
+            const items = Object.entries(cart);
+            const total = items.reduce((s,[_,d]) => s + d.quantity, 0);
+
+            if (total === 0) {
+                const msg = `
+                    <div class="text-center py-8">
+                        <p class="text-gray-400 text-sm mb-4">No has seleccionado servicios aún</p>
+                        <button onclick="window.scrollTo({top:0,behavior:'smooth'})"
+                            class="text-sm font-bold text-corporate-blue underline">
+                            Volver a servicios
+                        </button>
+                    </div>`;
+                cartItems.innerHTML = msg;
+                mobileCartItems.innerHTML = msg;
+                cartActions.style.display = "none";
+                mobileCartActions.style.display = "none";
+                mobileCartButton.style.display = "none";
+            } else {
+                const html = items.map(([id,data]) => `
+                    <div class="flex justify-between py-3 border-b">
+                        <div>
+                            <p class="font-bold text-corporate-blue text-sm">${data.name}</p>
+                            <p class="text-xs text-gray-500">Cantidad: ${data.quantity}</p>
+                        </div>
+                        <button onclick="decrementService(${id})" class="text-red-500">
+                            <span class="material-symbols-outlined">close</span>
+                        </button>
+                    </div>
+                `).join('');
+
+                cartItems.innerHTML = html;
+                mobileCartItems.innerHTML = html;
+                cartActions.style.display = "block";
+                mobileCartActions.style.display = "block";
+                mobileCartButton.style.display = "block";
+            }
+
+            const txt = `${total} ${total === 1 ? 'servicio' : 'servicios'}`;
+            cartCount.textContent = txt;
+            mobileCartCountText.textContent = txt;
+            mobileCartCountBadge.textContent = total;
+        }
+
+        let backWarningShown = false;
+
+        function goBackWithWarning() {
+
+            if (!cart || Object.keys(cart).length === 0) {
+                window.history.back();
+                return;
+            }
+
+            if (!backWarningShown) {
+                backWarningShown = true;
+                showBackNotice();
+                return;
+            }
+
+            window.history.back();
+        }
+
+        function showBackNotice() {
+            if (document.getElementById("back-notice")) return;
+
+            const notice = document.createElement("div");
+            notice.id = "back-notice";
+            notice.innerHTML = `
+                <span class="bn-text">¡Tienes servicios seleccionados!</span>
+                <div class="bn-line"></div>
+            `;
+
+            notice.onclick = () => notice.remove();
+
+            document.body.appendChild(notice);
+
+            requestAnimationFrame(() => notice.classList.add("show"));
+        }
+
+        const style = document.createElement("style");
+        style.textContent = `
+        #back-notice {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%) translateY(-10px);
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(12px);
+            border-radius: 14px;
+            padding: 12px 22px;
+            box-shadow: 0 12px 30px rgba(0,0,0,0.2);
+            z-index: 9999;
+
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+
+            opacity: 0;
+            transition: opacity 0.3s ease, transform 0.3s ease;
+            cursor: pointer;
+        }
+
+        #back-notice.show {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+
+        .bn-text {
+            font-size: 14px;
+            font-weight: 500;
+            color: #0f172a;
+            text-align: center;
+        }
+
+        .bn-line {
+            height: 3px;
+            width: 100%;
+            background: #0f172a;
+            border-radius: 999px;
+            animation: shrink 6s linear forwards;
+        }
+
+        @keyframes shrink {
+            from { width: 100%; }
+            to { width: 0%; }
+        }
+
+        /* Mobile */
+        @media (max-width: 640px) {
+            #back-notice {
+                top: 14px;
+                max-width: calc(100% - 32px);
+            }
+        }
+        `;
+        document.head.appendChild(style);
+
+        function sendWhatsAppRequest(type) {
+            const itemsArray = Object.entries(cart).filter(([_, data]) => data.quantity > 0);
+            
+            if (itemsArray.length === 0) {
+                alert('Por favor selecciona al menos un servicio');
+                return;
+            }
+            
+            const servicesList = itemsArray.map(([_, data]) => 
+                `• ${data.name} (x${data.quantity})`
+            ).join('%0A');
+            
+            const action = type === 'solicitar' ? 'SOLICITAR' : 'CONSULTAR';
+            const message = `Hola, deseo ${action} los siguientes servicios de diseño y desarrollo web:%0A%0A${servicesList}`;
+            
+            const whatsappURL = `https://wa.me/51998235688?text=${message}`;
+            window.open(whatsappURL, '_blank');
+        }
+
+        function showMobileCart() {
+            document.getElementById('mobile-cart-modal').classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeMobileCart() {
+            document.getElementById('mobile-cart-modal').classList.add('hidden');
+            document.body.style.overflow = '';
+        }
+
+        const plans = {
+            basic: [
+                {
+                    name: "Pack Presencia Web Básica",
+                    services: [
+                        "Revisión rápida del sitio web actual",
+                        "Diseño de landing page simple",
+                        "Configuración inicial de dominio y hosting"
+                    ]
+                },
+                {
+                    name: "Pack Diseño Inicial",
+                    services: [
+                        "Estructura básica de la página principal (wireframes)",
+                        "Selección de colores y tipografía",
+                        "Diseño adaptable a móviles y tablets (responsive)"
+                    ]
+                },
+                {
+                    name: "Pack SEO Básico",
+                    services: [
+                        "Optimización inicial SEO on-page",
+                        "Indexación rápida en Google",
+                        "Creación de sitemap y archivo robots.txt"
+                    ]
+                }
+            ],
+
+            intermediate: [
+                {
+                    name: "--------------------",
+                    services: ["----------------", "------------------", "----------------", "----------------"]
+                },
+                {
+                    name: "----------------",
+                    services: ["----------------", "----------------", "----------------", "----------------"]
+                },
+                {
+                    name: "----------------",
+                    services: ["----------------", "----------------", "----------------", "----------------"]
+                }
+            ],
+            plus: [
+                {
+                    name: "--------------------",
+                    services: ["----------------", "------------------", "----------------", "----------------"]
+                },
+                {
+                    name: "----------------",
+                    services: ["----------------", "----------------", "----------------", "----------------"]
+                },
+                {
+                    name: "----------------",
+                    services: ["----------------", "----------------", "----------------", "----------------"]
+                }
+            ],
+            ultra: [
+                {
+                    name: "--------------------",
+                    services: ["----------------", "------------------", "----------------", "----------------"]
+                },
+                {
+                    name: "----------------",
+                    services: ["----------------", "----------------", "----------------", "----------------"]
+                },
+                {
+                    name: "----------------",
+                    services: ["----------------", "----------------", "----------------", "----------------"]
+                }
+            ],
+            pro: [
+                {
+                    name: "--------------------",
+                    services: ["----------------", "------------------", "----------------", "----------------"]
+                },
+                {
+                    name: "----------------",
+                    services: ["----------------", "----------------", "----------------", "----------------"]
+                },
+                {
+                    name: "----------------",
+                    services: ["----------------", "----------------", "----------------", "----------------"]
+                }
+            ]
+        };
+
+        function renderPlans() {
+            const levels = ['basic', 'intermediate', 'plus', 'ultra', 'pro'];
+            
+            levels.forEach(level => {
+                const container = document.getElementById(`${level}-plans`);
+                container.innerHTML = plans[level].map(plan => `
+                    <div class="bg-white border-2 border-gray-200 rounded-lg p-6 hover:border-primary transition-all hover:shadow-xl">
+                        <div class="mb-4">
+                            <span class="material-symbols-outlined text-primary text-4xl mb-2">workspace_premium</span>
+                            <h4 class="text-xl font-black text-corporate-blue">${plan.name}</h4>
+                        </div>
+                        <div class="mb-6">
+                            <p class="text-xs font-bold uppercase tracking-wide text-gray-500 mb-3">Servicios Incluidos:</p>
+                            <ul class="space-y-2">
+                                ${plan.services.map(service => `
+                                    <li class="flex items-start gap-2 text-sm text-gray-700">
+                                        <span class="material-symbols-outlined text-primary text-sm mt-0.5">check_circle</span>
+                                        <span>${service}</span>
+                                    </li>
+                                `).join('')}
+                            </ul>
+                        </div>
+                        <button onclick="consultPlan('${plan.name}')" class="w-full bg-corporate-blue text-white py-3 px-4 font-bold text-sm uppercase tracking-wide hover:bg-primary hover:text-corporate-blue transition-all flex items-center justify-center gap-2">
+                            <span class="material-symbols-outlined text-lg">chat</span>
+                            Consultar este plan
+                        </button>
+                    </div>
+                `).join('');
+            });
+        }
+
+        function consultPlan(planName) {
+            const message = `Hola, deseo consultar el ${planName} antes de realizar la compra.`;
+            const whatsappURL = `https://wa.me/51998235688?text=${encodeURIComponent(message)}`;
+            window.open(whatsappURL, '_blank');
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            renderServices();
+            renderPlans();
+        });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            loadCart();
+            renderServices();
+            Object.keys(cart).forEach(id => updateUI(id));
+            updateCart();
+        });
+
+    </script>
+    <script>
+
+        const navbar = document.querySelector('nav'); 
+        let lastScrollTop = 0;
+
+        window.addEventListener('scroll', () => {
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+
+            if (scrollTop <= 0) {
+                navbar.classList.remove('nav-hidden');
+                lastScrollTop = 0;
+                return;
+            }
+
+            if (scrollTop > lastScrollTop) {
+                navbar.classList.add('nav-hidden');
+            } 
+            else {
+                navbar.classList.remove('nav-hidden');
+            }
+
+            lastScrollTop = scrollTop;
+        });
+
+    </script>
+</body>
+</html>
