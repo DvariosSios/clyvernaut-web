@@ -1,0 +1,882 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
+<title>FasterPio.io | Analizador de Imágenes con IA - Clyvernaut</title>
+<meta name="description" content="Convierte imágenes en texto descriptivo con IA. Herramienta gratuita de Clyvernaut Corporation para análisis visual inteligente. Sin registros, sin límites." />
+<meta name="author" content="Clyvernaut Corporation" />
+<meta name="robots" content="index, follow" />
+<link rel="canonical" href="https://fasterpio.io/" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="FasterPio.io | Analizador de Imágenes con IA" />
+<meta property="og:description" content="Sube cualquier imagen y obtén descripción detallada, metadatos y texto editable en segundos. Powered by Clyvernaut." />
+<meta property="og:url" content="https://fasterpio.io/" />
+<meta property="og:image" content="https://fasterpio.io/assets/og-image.jpg" />
+<meta property="og:locale" content="es_ES" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="FasterPio.io" />
+<meta name="twitter:description" content="Analizador de imágenes con IA: convierte fotos en texto al instante." />
+<meta name="twitter:image" content="https://fasterpio.io/assets/og-image.jpg" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;600;800;900&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+<script src="https://cdn.tailwindcss?plugins=forms,typography,aspect-ratio"></script>
+<link rel="icon" href="https://res.cloudinary.com/dcujd9kjc/image/upload/v1768795196/apple-touch-icon_qaoiku.png" type="image/x-icon" />
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "FasterPio.io",
+  "url": "https://fasterpio.io/",
+  "description": "Herramienta de análisis de imágenes con IA que convierte fotos en texto descriptivo, metadatos y contenido editable.",
+  "applicationCategory": "UtilityApplication",
+  "operatingSystem": "Any",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  },
+  "creator": {
+    "@type": "Organization",
+    "name": "Clyvernaut Corporation",
+    "url": "https://clyvernaut.com"
+  }
+}
+</script>
+<script>
+tailwind.config = {
+  darkMode: "class",
+  theme: {
+    extend: {
+      fontFamily: { sans: ['Inter', 'sans-serif'] },
+      colors: {
+        primary: "#febd01",
+        "primary-dark": "#e5aa00",
+        "corporate-blue": "#0d2139",
+        "corporate-dark": "#061221",
+        "neutral-gray": "#f8fafc",
+      },
+      animation: {
+        'spin-slow': 'spin 20s linear infinite',
+        'float': 'float 6s ease-in-out infinite',
+        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite'
+      },
+      keyframes: {
+        float: {
+          '0%, 100%': { transform: 'translateY(0)' },
+          '50%': { transform: 'translateY(-20px)' }
+        }
+      }
+    },
+  },
+}
+</script>
+<style>
+input, select, textarea { font-size: 16px !important; }
+nav { transition: transform 0.35s ease, opacity 0.25s ease; }
+.nav-hidden { transform: translateY(-100%); opacity: 0; }
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+  background: #f8fafc;
+}
+.reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
+}
+.reveal.active { opacity: 1; transform: translateY(0); }
+.glass-nav {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+.text-gradient {
+  background: linear-gradient(to right, #0d2139, #febd01);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.mobile-menu {
+  transform: translateX(100%);
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+.mobile-menu.open {
+  transform: translateX(0);
+  opacity: 1;
+  visibility: visible;
+}
+.overlay {
+  background: rgba(0, 0, 0, 0.5);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease;
+}
+.overlay.active { opacity: 1; visibility: visible; }
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+img { max-width: 100%; height: auto; }
+html, body { max-width: 100vw; overflow-x: hidden; }
+@media (hover: none) {
+  .hover\:scale-105:hover { transform: none; }
+}
+@media (max-width: 640px) { html { font-size: 15px; } }
+
+/* Estilos específicos de FasterPio */
+.drop-zone {
+  border: 2px dashed #e2e8f0;
+  transition: all 0.3s ease;
+}
+.drop-zone:hover, .drop-zone.dragover {
+  border-color: #febd01;
+  background: rgba(254, 189, 1, 0.05);
+}
+.result-card {
+  background: white;
+  border: 1px solid #f1f5f9;
+  border-radius: 4px;
+  transition: box-shadow 0.3s ease;
+}
+.result-card:hover {
+  box-shadow: 0 10px 40px -15px rgba(13, 33, 57, 0.15);
+}
+.color-dot {
+  width: 20px;
+  height: 20px;
+  border-radius: 4px;
+  border: 1px solid #e2e8f0;
+  display: inline-block;
+}
+.loading-dots::after {
+  content: '...';
+  animation: dots 1.5s steps(5, end) infinite;
+}
+@keyframes dots {
+  0%, 20% { content: '.'; }
+  40% { content: '..'; }
+  60%, 100% { content: '...'; }
+}
+.toast {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  background: #0d2139;
+  color: white;
+  padding: 12px 20px;
+  border-radius: 8px;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+  z-index: 9999;
+  transform: translateX(150%);
+  transition: transform 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.toast.show { transform: translateX(0); }
+.toast.success { border-left: 4px solid #febd01; }
+.toast.error { border-left: 4px solid #ef4444; }
+</style>
+</head>
+<body class="bg-neutral-gray overflow-x-hidden">
+
+<!-- Overlay para menú móvil -->
+<div id="overlay" class="overlay fixed inset-0 z-40 lg:hidden"></div>
+
+<!-- Navbar -->
+<nav class="fixed top-0 z-[100] w-full border-b border-gray-100/50 glass-nav transition-all duration-300" id="navbar">
+  <div class="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-12 h-16 sm:h-20 lg:h-24 flex items-center justify-between">
+    <div class="flex items-center cursor-pointer" onclick="window.location.href='/'">
+      <span class="text-xl sm:text-2xl font-black text-corporate-blue tracking-tighter">
+        FasterPio<span class="text-primary">.io</span>
+      </span>
+    </div>
+    
+    <!-- Desktop Menu -->
+    <div class="hidden lg:flex items-center gap-8 xl:gap-12">
+      <a class="text-[10px] xl:text-[11px] font-bold uppercase tracking-[0.15em] hover:text-primary transition-colors relative after:content-[''] after:absolute after:-bottom-2 after:left-0 after:w-0 after:h-[2px] after:bg-primary after:transition-all hover:after:w-full" href="#como-funciona">Cómo funciona</a>
+      <a class="text-[10px] xl:text-[11px] font-bold uppercase tracking-[0.15em] hover:text-primary transition-colors" href="#caracteristicas">Características</a>
+      <a class="text-[10px] xl:text-[11px] font-bold uppercase tracking-[0.15em] hover:text-primary transition-colors" href="https://clyvernaut.com" target="_blank">Clyvernaut</a>
+      <a class="text-[10px] xl:text-[11px] font-bold uppercase tracking-[0.15em] hover:text-primary transition-colors" href="#api">API</a>
+      <a href="#herramienta" class="bg-primary text-corporate-blue px-5 py-2.5 font-bold text-[9px] uppercase tracking-[0.2em] hover:bg-primary-dark transition-colors rounded-sm active:scale-95">
+        Probar Gratis
+      </a>
+    </div>
+    
+    <!-- Mobile Toggle -->
+    <button id="menu-toggle" class="lg:hidden p-2 text-corporate-blue focus:outline-none active:scale-95 transition-transform">
+      <span class="material-symbols-outlined text-2xl sm:text-3xl">menu</span>
+    </button>
+  </div>
+</nav>
+
+<!-- Mobile Menu -->
+<div id="mobile-menu" class="mobile-menu fixed top-0 right-0 h-full w-[90%] max-w-[340px] sm:max-w-[380px] bg-white shadow-2xl z-50 pt-20 sm:pt-24 px-5 sm:px-6 overflow-y-auto">
+  <button id="close-menu" class="absolute top-5 sm:top-6 right-5 sm:right-6 text-corporate-blue active:scale-90 transition-transform">
+    <span class="material-symbols-outlined text-2xl sm:text-3xl">close</span>
+  </button>
+  <div class="flex flex-col gap-6 sm:gap-8 mt-6 sm:mt-8 pb-8">
+    <a class="text-sm sm:text-base font-bold text-corporate-blue hover:text-primary transition-colors" href="#como-funciona">Cómo funciona</a>
+    <a class="text-sm sm:text-base font-bold text-corporate-blue hover:text-primary transition-colors" href="#caracteristicas">Características</a>
+    <a class="text-sm sm:text-base font-bold text-corporate-blue hover:text-primary transition-colors" href="https://clyvernaut.com" target="_blank">Clyvernaut</a>
+    <a class="text-sm sm:text-base font-bold text-corporate-blue hover:text-primary transition-colors" href="#api">API</a>
+    <a href="#herramienta" class="bg-primary text-corporate-blue px-5 py-3 font-bold text-[9px] uppercase tracking-[0.2em] text-center rounded-sm active:scale-95">
+      Probar Gratis
+    </a>
+  </div>
+</div>
+
+<!-- Hero Section -->
+<section class="relative overflow-hidden pt-16 sm:pt-20 min-h-[100svh] lg:min-h-screen">
+  <div class="absolute inset-0 z-0">
+    <img src="https://res.cloudinary.com/dcujd9kjc/image/upload/v1768795194/435896856v56236023656290bv6b9029035b673b670925_swfnyf.png"
+      class="w-full h-full object-cover object-center" alt="Background" loading="eager" />
+    <div class="absolute inset-0 bg-gradient-to-r from-white via-white/95 to-white/70 sm:via-white/90 lg:via-white/80"></div>
+    <div class="absolute inset-0 bg-gradient-to-t from-white via-transparent to-transparent"></div>
+  </div>
+  
+  <div class="relative z-10 flex items-center justify-center min-h-[calc(100svh-64px)] sm:min-h-[calc(100svh-80px)] lg:min-h-[calc(100vh-96px)]">
+    <div class="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-12 w-full py-8 sm:py-12">
+      <div class="grid lg:grid-cols-12 gap-8 sm:gap-12 items-center">
+        <div class="lg:col-span-7 reveal active">
+          <div class="flex items-center gap-3 sm:gap-4 mb-6 sm:mb-8">
+            <span class="h-[1px] w-8 sm:w-12 bg-corporate-blue"></span>
+            <span class="text-[9px] sm:text-[10px] font-bold uppercase tracking-[0.3em] sm:tracking-[0.4em] text-corporate-blue">IA Generativa</span>
+          </div>
+          <h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-[7rem] font-black leading-[0.95] tracking-tighter mb-6 sm:mb-8 text-corporate-blue">
+            FasterPio<span class="text-primary">.io</span><br/>
+            <span class="text-transparent bg-clip-text bg-gradient-to-r from-corporate-blue to-gray-500">Imágenes a Texto</span> <br/>
+            <span class="italic text-primary font-serif">en Segundos</span>
+          </h1>
+          <p class="text-base sm:text-lg md:text-xl text-gray-500 leading-relaxed mb-8 sm:mb-12 max-w-xl font-light border-l-2 border-primary pl-4 sm:pl-6">
+            Sube cualquier imagen y obtén una <span class="font-bold text-corporate-blue">descripción detallada, metadatos extraídos y texto editable</span> al instante. Sin registros. Sin límites.
+          </p>
+          <div class="flex flex-col sm:flex-row flex-wrap gap-4 sm:gap-6 items-stretch sm:items-center">
+            <a href="#herramienta" class="w-full sm:w-auto">
+              <button class="bg-corporate-blue text-white px-6 sm:px-10 py-4 sm:py-5 font-bold hover:bg-corporate-blue/90 hover:translate-x-2 transition-all duration-300 flex items-center justify-center gap-2 sm:gap-3 group shadow-2xl shadow-corporate-blue/30 w-full active:scale-95">
+                <span class="tracking-[0.15em] sm:tracking-[0.2em] uppercase text-[9px] sm:text-[10px]">Comenzar Ahora</span>
+                <span class="material-symbols-outlined text-sm group-hover:translate-x-1 transition-transform">arrow_forward</span>
+              </button>
+            </a>
+            <a href="#como-funciona" class="w-full sm:w-auto">
+              <button class="px-6 sm:px-8 py-4 sm:py-5 font-bold text-corporate-blue hover:text-primary transition-colors flex items-center justify-center gap-2 group w-full active:scale-95">
+                <span class="w-7 h-7 sm:w-8 sm:h-8 rounded-full border border-gray-300 flex items-center justify-center group-hover:border-primary group-hover:bg-primary/10 transition-colors">
+                  <span class="material-symbols-outlined text-sm">info</span>
+                </span>
+                <span class="tracking-[0.15em] sm:tracking-[0.2em] uppercase text-[9px] sm:text-[10px]">Cómo Funciona</span>
+              </button>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Tool Section Principal -->
+<section id="herramienta" class="py-16 sm:py-20 lg:py-28 bg-white relative overflow-hidden">
+  <div class="absolute inset-0 z-0 opacity-[0.03] pointer-events-none">
+    <svg class="w-full h-full" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+          <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#0d2139" stroke-width="0.5"/>
+        </pattern>
+      </defs>
+      <rect width="100%" height="100%" fill="url(#grid)" />
+    </svg>
+  </div>
+
+  <div class="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-12 relative z-10">
+    
+    <!-- Header de la Herramienta -->
+    <div class="text-center max-w-3xl mx-auto mb-12 sm:mb-16 lg:mb-20 reveal">
+      <h2 class="text-2xl sm:text-3xl md:text-4xl font-black text-corporate-blue tracking-tight mb-4">
+        Analizador Inteligente de Imágenes
+      </h2>
+      <p class="text-base sm:text-lg text-gray-500 leading-relaxed font-light">
+        Arrastra tu imagen o haz clic para subir. Nuestra IA procesará y generará una descripción precisa en segundos.
+      </p>
+    </div>
+
+    <!-- Área Principal de la Herramienta -->
+    <div class="grid lg:grid-cols-2 gap-6 sm:gap-8 lg:gap-12 items-start mb-16 sm:mb-20">
+      
+      <!-- Panel de Upload -->
+      <div class="bg-neutral-gray border border-gray-100 rounded-sm shadow-sm p-6 sm:p-8 reveal">
+        <div class="flex items-center gap-3 mb-6">
+          <span class="material-symbols-outlined text-primary text-xl">upload_file</span>
+          <h3 class="text-lg sm:text-xl font-black text-corporate-blue uppercase tracking-wide">1. Sube tu imagen</h3>
+        </div>
+        
+        <!-- Zona de Drop -->
+        <div id="drop-zone" class="drop-zone rounded-sm p-8 sm:p-10 text-center cursor-pointer group bg-white">
+          <input type="file" id="image-input" accept="image/*" class="hidden" />
+          <div class="flex flex-col items-center gap-4">
+            <div class="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-primary/10 flex items-center justify-center group-hover:scale-110 transition-transform">
+              <span class="material-symbols-outlined text-primary text-3xl sm:text-4xl">image_search</span>
+            </div>
+            <div>
+              <p class="text-sm sm:text-base font-bold text-corporate-blue mb-1">Arrastra o haz clic para subir</p>
+              <p class="text-[10px] sm:text-xs text-gray-400 uppercase tracking-wider">PNG • JPG • WEBP • Máx. 10MB</p>
+            </div>
+            <button class="mt-2 bg-corporate-blue text-white px-6 py-3 font-bold text-[10px] sm:text-xs uppercase tracking-[0.15em] hover:bg-corporate-blue/90 transition-colors rounded-sm active:scale-95">
+              Seleccionar archivo
+            </button>
+          </div>
+        </div>
+
+        <!-- Vista previa de imagen -->
+        <div id="preview-container" class="hidden mt-6">
+          <p class="text-[10px] font-bold uppercase tracking-wider text-gray-400 mb-3">Vista previa</p>
+          <div class="relative rounded-sm overflow-hidden border border-gray-100">
+            <img id="image-preview" src="" alt="Preview" class="w-full h-48 sm:h-64 object-cover" />
+            <button id="remove-image" class="absolute top-3 right-3 w-7 h-7 bg-corporate-blue/90 hover:bg-corporate-blue rounded-full flex items-center justify-center text-white transition-colors">
+              <span class="material-symbols-outlined text-sm">close</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Panel de Resultados -->
+      <div class="result-card p-6 sm:p-8 reveal">
+        <div class="flex items-center justify-between mb-6">
+          <div class="flex items-center gap-3">
+            <span class="material-symbols-outlined text-primary text-xl">analytics</span>
+            <h3 class="text-lg sm:text-xl font-black text-corporate-blue uppercase tracking-wide">2. Resultados</h3>
+          </div>
+          <button id="copy-result" class="text-[9px] sm:text-[10px] font-bold uppercase tracking-[0.15em] text-gray-400 hover:text-primary transition-colors flex items-center gap-1 active:scale-95">
+            <span class="material-symbols-outlined text-sm">content_copy</span>
+            Copiar
+          </button>
+        </div>
+
+        <!-- Estado inicial / Loading / Resultado -->
+        <div id="result-placeholder" class="text-center py-12 sm:py-16">
+          <span class="material-symbols-outlined text-gray-200 text-5xl sm:text-6xl mb-4">auto_awesome</span>
+          <p class="text-sm text-gray-400">Sube una imagen para comenzar el análisis</p>
+        </div>
+
+        <div id="result-loading" class="hidden text-center py-12">
+          <div class="inline-flex items-center gap-3 text-corporate-blue">
+            <span class="w-5 h-5 border-2 border-primary border-t-transparent rounded-full animate-spin"></span>
+            <span class="text-sm font-bold uppercase tracking-wider loading-dots">Analizando con IA</span>
+          </div>
+        </div>
+
+        <div id="result-content" class="hidden space-y-4">
+          <!-- Descripción Principal -->
+          <div class="p-4 bg-neutral-gray rounded-sm border-l-4 border-primary">
+            <p class="text-[10px] font-bold uppercase tracking-wider text-gray-400 mb-2">Descripción generada</p>
+            <p id="generated-text" class="text-sm sm:text-base text-gray-700 leading-relaxed"></p>
+          </div>
+
+          <!-- Metadatos Extraídos -->
+          <div class="grid grid-cols-2 gap-3">
+            <div class="p-3 bg-gray-50 rounded-sm">
+              <p class="text-[9px] font-bold uppercase tracking-wider text-gray-400">Formato</p>
+              <p id="meta-format" class="text-xs font-bold text-corporate-blue mt-1">--</p>
+            </div>
+            <div class="p-3 bg-gray-50 rounded-sm">
+              <p class="text-[9px] font-bold uppercase tracking-wider text-gray-400">Dimensiones</p>
+              <p id="meta-dimensions" class="text-xs font-bold text-corporate-blue mt-1">--</p>
+            </div>
+            <div class="p-3 bg-gray-50 rounded-sm">
+              <p class="text-[9px] font-bold uppercase tracking-wider text-gray-400">Tamaño</p>
+              <p id="meta-size" class="text-xs font-bold text-corporate-blue mt-1">--</p>
+            </div>
+            <div class="p-3 bg-gray-50 rounded-sm">
+              <p class="text-[9px] font-bold uppercase tracking-wider text-gray-400">Colores</p>
+              <div id="meta-colors" class="flex gap-1 mt-2"></div>
+            </div>
+          </div>
+
+          <!-- Acciones -->
+          <div class="flex flex-wrap gap-3 pt-4">
+            <button id="export-txt" class="flex-1 min-w-[120px] bg-primary text-corporate-blue px-4 py-3 font-bold text-[9px] sm:text-[10px] uppercase tracking-[0.15em] hover:bg-primary-dark transition-colors rounded-sm active:scale-95 flex items-center justify-center gap-2">
+              <span class="material-symbols-outlined text-sm">download</span>
+              Exportar .TXT
+            </button>
+            <button id="reanalyze" class="flex-1 min-w-[120px] border border-gray-200 text-corporate-blue px-4 py-3 font-bold text-[9px] sm:text-[10px] uppercase tracking-[0.15em] hover:bg-neutral-gray transition-colors rounded-sm active:scale-95 flex items-center justify-center gap-2">
+              <span class="material-symbols-outlined text-sm">refresh</span>
+              Reanalizar
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Features / Beneficios -->
+    <div id="caracteristicas" class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-16 sm:mb-20">
+      <div class="p-5 sm:p-6 bg-white border border-gray-100 rounded-sm hover:shadow-md transition-shadow reveal">
+        <span class="material-symbols-outlined text-primary text-2xl mb-4">bolt</span>
+        <h4 class="text-sm font-black text-corporate-blue uppercase tracking-wide mb-2">Procesamiento en tiempo real</h4>
+        <p class="text-[10px] sm:text-xs text-gray-500 leading-relaxed">Resultados en menos de 3 segundos con nuestro motor de IA optimizado.</p>
+      </div>
+      <div class="p-5 sm:p-6 bg-white border border-gray-100 rounded-sm hover:shadow-md transition-shadow reveal">
+        <span class="material-symbols-outlined text-primary text-2xl mb-4">shield</span>
+        <h4 class="text-sm font-black text-corporate-blue uppercase tracking-wide mb-2">Privacidad garantizada</h4>
+        <p class="text-[10px] sm:text-xs text-gray-500 leading-relaxed">Tus imágenes se procesan de forma segura y se eliminan automáticamente.</p>
+      </div>
+      <div class="p-5 sm:p-6 bg-white border border-gray-100 rounded-sm hover:shadow-md transition-shadow reveal">
+        <span class="material-symbols-outlined text-primary text-2xl mb-4">language</span>
+        <h4 class="text-sm font-black text-corporate-blue uppercase tracking-wide mb-2">Multi-idioma</h4>
+        <p class="text-[10px] sm:text-xs text-gray-500 leading-relaxed">Descripciones disponibles en español, inglés y 15+ idiomas adicionales.</p>
+      </div>
+      <div class="p-5 sm:p-6 bg-white border border-gray-100 rounded-sm hover:shadow-md transition-shadow reveal">
+        <span class="material-symbols-outlined text-primary text-2xl mb-4">api</span>
+        <h4 class="text-sm font-black text-corporate-blue uppercase tracking-wide mb-2">API disponible</h4>
+        <p class="text-[10px] sm:text-xs text-gray-500 leading-relaxed">Integra FasterPio.io en tus proyectos con nuestra API REST documentada.</p>
+      </div>
+    </div>
+
+    <!-- CTA Final -->
+    <div class="text-center reveal">
+      <div class="inline-flex flex-col sm:flex-row items-center gap-4 bg-corporate-blue rounded-sm p-1">
+        <a href="#herramienta" class="w-full sm:w-auto">
+          <button class="w-full bg-primary text-corporate-blue px-8 py-4 font-bold text-[10px] sm:text-xs uppercase tracking-[0.2em] hover:bg-primary-dark transition-colors rounded-sm active:scale-95">
+            Comenzar ahora → Gratis
+          </button>
+        </a>
+        <a href="#api" class="w-full sm:w-auto">
+          <button class="w-full px-8 py-4 font-bold text-white text-[10px] sm:text-xs uppercase tracking-[0.2em] hover:text-primary transition-colors active:scale-95">
+            Ver documentación API
+          </button>
+        </a>
+      </div>
+      <p class="mt-4 text-[9px] sm:text-[10px] text-gray-400 uppercase tracking-wider">
+        Sin tarjeta de crédito • Sin límites de uso • <span class="text-primary font-bold">100% funcional</span>
+      </p>
+    </div>
+
+  </div>
+</section>
+
+<!-- Cómo Funciona Section -->
+<section id="como-funciona" class="py-16 sm:py-20 lg:py-28 bg-neutral-gray">
+  <div class="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-12">
+    <div class="text-center max-w-3xl mx-auto mb-12 sm:mb-16 lg:mb-20 reveal">
+      <span class="text-primary font-black tracking-[0.3em] uppercase text-[10px] sm:text-xs mb-3 sm:mb-4 block">Proceso Simple</span>
+      <h2 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-corporate-blue tracking-tighter leading-[0.9] mb-6 sm:mb-8">
+        ¿Cómo funciona <span class="text-primary italic font-serif">FasterPio.io</span>?
+      </h2>
+      <p class="text-base sm:text-lg text-gray-500 leading-relaxed font-light">
+        Tres pasos simples para convertir cualquier imagen en texto descriptivo con inteligencia artificial.
+      </p>
+    </div>
+
+    <div class="grid md:grid-cols-3 gap-6 sm:gap-8 lg:gap-12">
+      <div class="text-center p-6 sm:p-8 bg-white border border-gray-100 rounded-sm reveal">
+        <div class="w-14 h-14 sm:w-16 sm:h-16 mx-auto bg-primary/10 rounded-full flex items-center justify-center mb-5 sm:mb-6">
+          <span class="material-symbols-outlined text-primary text-2xl sm:text-3xl">upload</span>
+        </div>
+        <h3 class="text-lg sm:text-xl font-black text-corporate-blue uppercase tracking-wide mb-3">1. Sube tu imagen</h3>
+        <p class="text-sm text-gray-500 leading-relaxed">Arrastra o selecciona cualquier imagen PNG, JPG o WEBP de hasta 10MB.</p>
+      </div>
+      <div class="text-center p-6 sm:p-8 bg-white border border-gray-100 rounded-sm reveal">
+        <div class="w-14 h-14 sm:w-16 sm:h-16 mx-auto bg-primary/10 rounded-full flex items-center justify-center mb-5 sm:mb-6">
+          <span class="material-symbols-outlined text-primary text-2xl sm:text-3xl">psychology</span>
+        </div>
+        <h3 class="text-lg sm:text-xl font-black text-corporate-blue uppercase tracking-wide mb-3">2. IA analiza</h3>
+        <p class="text-sm text-gray-500 leading-relaxed">Nuestro modelo de visión por computadora procesa y entiende el contenido visual.</p>
+      </div>
+      <div class="text-center p-6 sm:p-8 bg-white border border-gray-100 rounded-sm reveal">
+        <div class="w-14 h-14 sm:w-16 sm:h-16 mx-auto bg-primary/10 rounded-full flex items-center justify-center mb-5 sm:mb-6">
+          <span class="material-symbols-outlined text-primary text-2xl sm:text-3xl">text_fields</span>
+        </div>
+        <h3 class="text-lg sm:text-xl font-black text-corporate-blue uppercase tracking-wide mb-3">3. Obtén texto</h3>
+        <p class="text-sm text-gray-500 leading-relaxed">Recibe una descripción detallada, metadatos y opciones de exportación al instante.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- API Section -->
+<section id="api" class="py-16 sm:py-20 lg:py-28 bg-white">
+  <div class="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-12">
+    <div class="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+      <div class="reveal">
+        <span class="text-primary font-black tracking-[0.3em] uppercase text-[10px] sm:text-xs mb-3 sm:mb-4 block">Para Desarrolladores</span>
+        <h2 class="text-3xl sm:text-4xl md:text-5xl font-black text-corporate-blue tracking-tighter leading-[0.9] mb-6 sm:mb-8">
+          Integra FasterPio con tu <span class="text-primary italic font-serif">API</span>
+        </h2>
+        <p class="text-base sm:text-lg text-gray-500 leading-relaxed font-light mb-8">
+          Accede a nuestro motor de análisis de imágenes mediante una API REST simple y documentada. Perfecta para aplicaciones, automatizaciones y flujos de trabajo empresariales.
+        </p>
+        <div class="space-y-4 mb-8">
+          <div class="flex items-start gap-3">
+            <span class="material-symbols-outlined text-primary mt-1">check_circle</span>
+            <span class="text-sm text-gray-600">Endpoints REST con autenticación API Key</span>
+          </div>
+          <div class="flex items-start gap-3">
+            <span class="material-symbols-outlined text-primary mt-1">check_circle</span>
+            <span class="text-sm text-gray-600">Respuestas en JSON estructuradas</span>
+          </div>
+          <div class="flex items-start gap-3">
+            <span class="material-symbols-outlined text-primary mt-1">check_circle</span>
+            <span class="text-sm text-gray-600">Webhooks para procesamiento asíncrono</span>
+          </div>
+          <div class="flex items-start gap-3">
+            <span class="material-symbols-outlined text-primary mt-1">check_circle</span>
+            <span class="text-sm text-gray-600">SDKs para JavaScript, Python y PHP</span>
+          </div>
+        </div>
+        <a href="#" class="inline-flex items-center gap-2 text-corporate-blue font-bold text-[10px] uppercase tracking-[0.2em] hover:text-primary transition-colors border-b-2 border-primary pb-1">
+          Ver documentación completa
+          <span class="material-symbols-outlined text-sm">arrow_forward</span>
+        </a>
+      </div>
+      <div class="bg-corporate-blue rounded-sm p-6 sm:p-8 reveal">
+        <div class="bg-corporate-dark rounded-sm p-4 sm:p-6 font-mono text-[10px] sm:text-xs text-primary overflow-x-auto">
+          <pre><code># Ejemplo de solicitud cURL
+curl -X POST https://api.fasterpio.io/v1/analyze \
+  -H "Authorization: Bearer TU_API_KEY" \
+  -H "Content-Type: multipart/form-data" \
+  -F "image=@tu-imagen.jpg" \
+  -F "language=es"
+
+# Respuesta JSON
+{
+  "success": true,
+  "data": {
+    "description": "Imagen de alta resolución...",
+    "metadata": {
+      "format": "jpg",
+      "dimensions": "1920x1080",
+      "size": "2.4 MB",
+      "colors": ["#0d2139", "#febd01"]
+    },
+    "confidence": 0.97
+  }
+}</code></pre>
+        </div>
+        <div class="mt-6 flex flex-wrap gap-3">
+          <span class="px-3 py-1.5 bg-white/10 text-white text-[9px] font-bold uppercase tracking-wider rounded-sm">REST API</span>
+          <span class="px-3 py-1.5 bg-white/10 text-white text-[9px] font-bold uppercase tracking-wider rounded-sm">Webhooks</span>
+          <span class="px-3 py-1.5 bg-white/10 text-white text-[9px] font-bold uppercase tracking-wider rounded-sm">SDKs</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="bg-corporate-blue text-white pt-12 sm:pt-16 lg:pt-24 pb-8 sm:pb-10 lg:pb-12 border-t border-white/5 font-sans">
+  <div class="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-12">
+    <div class="flex flex-col lg:flex-row justify-between gap-10 sm:gap-12 lg:gap-16 mb-12 sm:mb-16 lg:mb-20">
+      <div class="max-w-xs">
+        <span class="text-xl font-black text-white tracking-tighter mb-4 block">
+          FasterPio<span class="text-primary">.io</span>
+        </span>
+        <p class="text-gray-400 text-[10px] sm:text-xs leading-relaxed font-medium uppercase tracking-wider sm:tracking-widest">
+          Barranca - Lima / Perú<br>
+          Tecnología de Clyvernaut Corporation
+        </p>
+      </div>
+      <div class="grid grid-cols-2 sm:grid-cols-2 gap-x-12 sm:gap-x-16 lg:gap-x-20 gap-y-8 sm:gap-y-10">
+        <div>
+          <h4 class="text-[9px] sm:text-[10px] font-black uppercase tracking-[0.25em] sm:tracking-[0.3em] text-primary mb-4 sm:mb-6">Producto</h4>
+          <ul class="space-y-3 sm:space-y-4 text-[10px] sm:text-xs font-bold uppercase tracking-wider sm:tracking-widest text-gray-500">
+            <li><a class="hover:text-white transition-colors" href="#herramienta">Herramienta</a></li>
+            <li><a class="hover:text-white transition-colors" href="#caracteristicas">Características</a></li>
+            <li><a class="hover:text-white transition-colors" href="#api">API</a></li>
+            <li><a class="hover:text-white transition-colors" href="#">Precios</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="text-[9px] sm:text-[10px] font-black uppercase tracking-[0.25em] sm:tracking-[0.3em] text-primary mb-4 sm:mb-6">Legal</h4>
+          <ul class="space-y-3 sm:space-y-4 text-[10px] sm:text-xs font-bold uppercase tracking-wider sm:tracking-widest text-gray-500">
+            <li><a class="hover:text-white transition-colors" href="pages/page_787834678234_terms.html">Términos</a></li>
+            <li><a class="hover:text-white transition-colors" href="pages/page_4376572354646_privacity.html">Privacidad</a></li>
+            <li><a class="hover:text-white transition-colors" href="#">Cookies</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="flex flex-col items-start lg:items-end">
+        <h4 class="text-[9px] sm:text-[10px] font-black uppercase tracking-[0.25em] sm:tracking-[0.3em] text-primary mb-4 sm:mb-6">Clyvernaut</h4>
+        <div class="flex flex-wrap gap-3 sm:gap-4">
+          <a href="https://clyvernaut.com" class="group flex items-center justify-center w-9 h-9 sm:w-10 sm:h-10 rounded-full border border-white/10 hover:border-primary transition-all active:scale-90">
+            <span class="material-symbols-outlined text-xs sm:text-sm text-gray-500 group-hover:text-white">business</span>
+          </a>
+          <a href="https://www.facebook.com/profile.php?id=61571622719609" class="group flex items-center justify-center w-9 h-9 sm:w-10 sm:h-10 rounded-full border border-white/10 hover:border-primary transition-all active:scale-90">
+            <i class="fa-brands fa-facebook-f text-xs sm:text-sm text-gray-500 group-hover:text-white"></i>
+          </a>
+          <a href="https://www.instagram.com/clyvernaut_corporation/" class="group flex items-center justify-center w-9 h-9 sm:w-10 sm:h-10 rounded-full border border-white/10 hover:border-primary transition-all active:scale-90">
+            <i class="fa-brands fa-instagram text-xs sm:text-sm text-gray-500 group-hover:text-white"></i>
+          </a>
+          <a href="https://www.linkedin.com/in/clyvernautcorporation/" class="group flex items-center justify-center w-9 h-9 sm:w-10 sm:h-10 rounded-full border border-white/10 hover:border-primary transition-all active:scale-90">
+            <i class="fa-brands fa-linkedin-in text-xs sm:text-sm text-gray-500 group-hover:text-white"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="border-t border-white/5 pt-8 sm:pt-10 flex flex-col md:flex-row justify-between items-center gap-4 sm:gap-6">
+      <p class="text-[9px] sm:text-[10px] text-gray-600 uppercase tracking-[0.15em] sm:tracking-[0.2em] font-bold italic text-center md:text-left">
+        © 2026 FasterPio.io • Powered by Clyvernaut Corp. Todos los derechos reservados.
+      </p>
+      <div class="flex items-center gap-4 sm:gap-6 text-[9px] sm:text-[10px] text-gray-700 uppercase tracking-wider sm:tracking-widest">
+        <span>Barranca, Lima</span>
+        <span class="w-1 h-1 bg-gray-800 rounded-full"></span>
+        <span>Perú</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- Toast Notification -->
+<div id="toast" class="toast">
+  <span class="material-symbols-outlined text-primary" id="toast-icon">check_circle</span>
+  <span id="toast-message">Operación exitosa</span>
+</div>
+
+<!-- Scripts -->
+<script>
+// Animación scroll
+function reveal() {
+  document.querySelectorAll(".reveal").forEach(el => {
+    const windowHeight = window.innerHeight;
+    const elementTop = el.getBoundingClientRect().top;
+    const elementVisible = 100;
+    if (elementTop < windowHeight - elementVisible) {
+      el.classList.add("active");
+    }
+  });
+}
+window.addEventListener("scroll", reveal);
+window.addEventListener("load", reveal);
+reveal();
+
+// Menú móvil
+const menuToggle = document.getElementById('menu-toggle');
+const closeMenu = document.getElementById('close-menu');
+const overlay = document.getElementById('overlay');
+const mobileMenu = document.getElementById('mobile-menu');
+
+function openMenu() {
+  mobileMenu.classList.add('open');
+  overlay.classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+function closeMenuHandler() {
+  mobileMenu.classList.remove('open');
+  overlay.classList.remove('active');
+  document.body.style.overflow = '';
+}
+menuToggle?.addEventListener('click', openMenu);
+closeMenu?.addEventListener('click', closeMenuHandler);
+overlay?.addEventListener('click', closeMenuHandler);
+
+// Navbar hide/show
+const navbar = document.querySelector('nav');
+let lastScrollTop = 0;
+let scrollTimeout;
+window.addEventListener('scroll', () => {
+  clearTimeout(scrollTimeout);
+  scrollTimeout = setTimeout(() => {
+    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+    if (scrollTop <= 0) { navbar.classList.remove('nav-hidden'); lastScrollTop = 0; return; }
+    if (scrollTop > lastScrollTop && scrollTop > 100) {
+      navbar.classList.add('nav-hidden');
+    } else {
+      navbar.classList.remove('nav-hidden');
+    }
+    lastScrollTop = scrollTop;
+  }, 10);
+}, { passive: true });
+
+// ===== LÓGICA DE FASTERPIO =====
+const dropZone = document.getElementById('drop-zone');
+const imageInput = document.getElementById('image-input');
+const previewContainer = document.getElementById('preview-container');
+const imagePreview = document.getElementById('image-preview');
+const removeImageBtn = document.getElementById('remove-image');
+const resultPlaceholder = document.getElementById('result-placeholder');
+const resultLoading = document.getElementById('result-loading');
+const resultContent = document.getElementById('result-content');
+const generatedText = document.getElementById('generated-text');
+const copyResultBtn = document.getElementById('copy-result');
+const exportTxtBtn = document.getElementById('export-txt');
+const reanalyzeBtn = document.getElementById('reanalyze');
+const toast = document.getElementById('toast');
+const toastMessage = document.getElementById('toast-message');
+const toastIcon = document.getElementById('toast-icon');
+
+let currentFile = null;
+let analysisResult = null;
+
+// Click en drop zone
+dropZone.addEventListener('click', () => imageInput.click());
+
+// Selección de archivo
+imageInput.addEventListener('change', (e) => {
+  if (e.target.files[0]) handleFile(e.target.files[0]);
+});
+
+// Drag & drop
+['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+  dropZone.addEventListener(eventName, (e) => { e.preventDefault(); e.stopPropagation(); }, false);
+});
+['dragenter', 'dragover'].forEach(eventName => {
+  dropZone.addEventListener(eventName, () => dropZone.classList.add('dragover'), false);
+});
+['dragleave', 'drop'].forEach(eventName => {
+  dropZone.addEventListener(eventName, () => dropZone.classList.remove('dragover'), false);
+});
+dropZone.addEventListener('drop', (e) => {
+  const files = e.dataTransfer.files;
+  if (files[0]) handleFile(files[0]);
+});
+
+function handleFile(file) {
+  if (!file.type.startsWith('image/')) {
+    showToast('Por favor selecciona un archivo de imagen válido', 'error');
+    return;
+  }
+  if (file.size > 10 * 1024 * 1024) {
+    showToast('El archivo excede el límite de 10MB', 'error');
+    return;
+  }
+  
+  currentFile = file;
+  
+  // Mostrar preview
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    imagePreview.src = e.target.result;
+    previewContainer.classList.remove('hidden');
+    dropZone.classList.add('hidden');
+    analyzeImage(file);
+  };
+  reader.readAsDataURL(file);
+}
+
+function analyzeImage(file) {
+  resultPlaceholder.classList.add('hidden');
+  resultContent.classList.add('hidden');
+  resultLoading.classList.remove('hidden');
+  
+  // Simular análisis de IA (aquí iría la llamada real a tu API)
+  setTimeout(() => {
+    // Mock de resultados
+    analysisResult = {
+      description: "Imagen de alta resolución que muestra un entorno profesional con elementos de diseño corporativo. Se observan colores predominantes en tonos azules y amarillos, con tipografía clara y jerarquía visual definida. La composición sugiere un propósito comercial o institucional, con espacios bien equilibrados y elementos gráficos modernos.",
+      metadata: {
+        format: file.type.split('/')[1].toUpperCase(),
+        dimensions: '1920 × 1080 px',
+        size: formatFileSize(file.size),
+        colors: ['#0d2139', '#febd01', '#f8fafc', '#64748b']
+      }
+    };
+    
+    // Renderizar resultados
+    generatedText.textContent = analysisResult.description;
+    document.getElementById('meta-format').textContent = analysisResult.metadata.format;
+    document.getElementById('meta-dimensions').textContent = analysisResult.metadata.dimensions;
+    document.getElementById('meta-size').textContent = analysisResult.metadata.size;
+    
+    const colorsContainer = document.getElementById('meta-colors');
+    colorsContainer.innerHTML = '';
+    analysisResult.metadata.colors.forEach(color => {
+      const dot = document.createElement('span');
+      dot.className = 'color-dot';
+      dot.style.backgroundColor = color;
+      colorsContainer.appendChild(dot);
+    });
+    
+    resultLoading.classList.add('hidden');
+    resultContent.classList.remove('hidden');
+    resultContent.classList.add('reveal', 'active');
+    
+    showToast('Análisis completado exitosamente', 'success');
+  }, 2500);
+}
+
+function formatFileSize(bytes) {
+  if (bytes < 1024) return bytes + ' B';
+  else if (bytes < 1048576) return (bytes / 1024).toFixed(1) + ' KB';
+  else return (bytes / 1048576).toFixed(1) + ' MB';
+}
+
+// Eliminar imagen
+removeImageBtn.addEventListener('click', (e) => {
+  e.stopPropagation();
+  previewContainer.classList.add('hidden');
+  dropZone.classList.remove('hidden');
+  imageInput.value = '';
+  resultContent.classList.add('hidden');
+  resultPlaceholder.classList.remove('hidden');
+  currentFile = null;
+  analysisResult = null;
+});
+
+// Copiar resultado
+copyResultBtn.addEventListener('click', () => {
+  if (!analysisResult) return;
+  navigator.clipboard.writeText(analysisResult.description).then(() => {
+    showToast('Texto copiado al portapapeles', 'success');
+  }).catch(() => {
+    showToast('Error al copiar', 'error');
+  });
+});
+
+// Exportar a TXT
+exportTxtBtn.addEventListener('click', () => {
+  if (!analysisResult) return;
+  const content = `FasterPio.io - Análisis de Imagen\n${'='.repeat(40)}\n\nDescripción:\n${analysisResult.description}\n\nMetadatos:\n• Formato: ${analysisResult.metadata.format}\n• Dimensiones: ${analysisResult.metadata.dimensions}\n• Tamaño: ${analysisResult.metadata.size}\n\nGenerado el: ${new Date().toLocaleString('es-PE')}`;
+  const blob = new Blob([content], { type: 'text/plain' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `fasterpio-analisis-${Date.now()}.txt`;
+  a.click();
+  URL.revokeObjectURL(url);
+  showToast('Archivo exportado', 'success');
+});
+
+// Reanalizar
+reanalyzeBtn.addEventListener('click', () => {
+  if (currentFile) analyzeImage(currentFile);
+});
+
+// Sistema de Toast
+function showToast(message, type = 'success') {
+  toastMessage.textContent = message;
+  toast.className = `toast ${type} show`;
+  toastIcon.textContent = type === 'success' ? 'check_circle' : 'error';
+  setTimeout(() => {
+    toast.classList.remove('show');
+  }, 4000);
+}
+
+// Smooth scroll para anclas
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+  anchor.addEventListener('click', function(e) {
+    const href = this.getAttribute('href');
+    if (href !== '#' && href.startsWith('#')) {
+      e.preventDefault();
+      const target = document.querySelector(href);
+      if (target) {
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        // Cerrar menú móvil si está abierto
+        if (mobileMenu.classList.contains('open')) closeMenuHandler();
+      }
+    }
+  });
+});
+
+// Prevenir zoom en iOS
+let lastTouchEnd = 0;
+document.addEventListener('touchend', (event) => {
+  const now = Date.now();
+  if (now - lastTouchEnd <= 300) { event.preventDefault(); }
+  lastTouchEnd = now;
+}, false);
+</script>
+
+<!-- Font Awesome para íconos sociales -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</body>
+</html>
